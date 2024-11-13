@@ -33,7 +33,7 @@ public abstract class LevelParent {
 	private final List<ActiveActorDestructible> enemyProjectiles;
 
 	private int currentNumberOfEnemies;
-	private LevelView levelView;
+	private LevelOneView levelView;
 
 	private final StringProperty levelProperty;
 
@@ -64,7 +64,7 @@ public abstract class LevelParent {
 
 	protected abstract void spawnEnemyUnits();
 
-	protected abstract LevelView instantiateLevelView();
+	protected abstract LevelOneView instantiateLevelView();
 
 	public Scene initializeScene() {
 		initializeBackground();
