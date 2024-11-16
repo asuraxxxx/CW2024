@@ -17,7 +17,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-
 public abstract class LevelParent {
 
     private static final double SCREEN_HEIGHT_ADJUSTMENT = 150;
@@ -100,6 +99,7 @@ public abstract class LevelParent {
             background.requestFocus();  // Ensure focus is set back to the background
         }
     }
+
 
     private void showPauseScreen() {
         PauseScreen pauseScreen = new PauseScreen((Stage) scene.getWindow(), this::resumeGame, this::showSettings);
@@ -306,10 +306,17 @@ public abstract class LevelParent {
     }
 
     private void addPauseButton() {
-        Button pauseButton = new Button("Pause");
+        Image pauseImage = new Image(getClass().getResource("/com/example/demo/images/pausescreenbutton.png").toExternalForm());
+        ImageView pauseImageView = new ImageView(pauseImage);
+        pauseImageView.setFitWidth(50);
+        pauseImageView.setFitHeight(50);
+
+        Button pauseButton = new Button();
+        pauseButton.setGraphic(pauseImageView);
         pauseButton.setLayoutX(screenWidth - 100);
         pauseButton.setLayoutY(20);
         pauseButton.setOnAction(e -> pauseGame());
         root.getChildren().add(pauseButton);
     }
+
 }

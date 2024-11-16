@@ -3,11 +3,11 @@ package com.example.demo;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 
 public class PauseScreen {
 
@@ -22,11 +22,6 @@ public class PauseScreen {
     }
 
     public void show() {
-        // Title Label
-        Label titleLabel = new Label("Game Paused");
-        titleLabel.setStyle("-fx-font-size: 48px; -fx-font-weight: bold; -fx-text-fill: #000000;");
-        titleLabel.setAlignment(Pos.CENTER);
-
         Stage pauseStage = new Stage();
         pauseStage.initModality(Modality.APPLICATION_MODAL);
         pauseStage.setTitle("Game Pause");
@@ -34,9 +29,14 @@ public class PauseScreen {
         VBox layout = new VBox(20);
         layout.setAlignment(Pos.CENTER);
 
-        // Resume button
-        Button resumeButton = new Button("Resume");
-        resumeButton.setPrefWidth(200);
+        // Resume button with image
+        Image resumeImage = new Image(getClass().getResource("/com/example/demo/images/resumebutton.jpg").toExternalForm());
+        ImageView resumeImageView = new ImageView(resumeImage);
+        resumeImageView.setFitWidth(50);
+        resumeImageView.setFitHeight(50);
+
+        Button resumeButton = new Button();
+        resumeButton.setGraphic(resumeImageView);
         resumeButton.setOnAction(event -> {
             if (resume != null) {
                 resume.run();
@@ -44,25 +44,35 @@ public class PauseScreen {
             pauseStage.close();
         });
 
-        // Settings button
-        Button settingsButton = new Button("Settings");
-        settingsButton.setPrefWidth(200);
+        // Settings button with image
+        Image settingsImage = new Image(getClass().getResource("/com/example/demo/images/settingbutton.jpg").toExternalForm());
+        ImageView settingsImageView = new ImageView(settingsImage);
+        settingsImageView.setFitWidth(50);
+        settingsImageView.setFitHeight(50);
+
+        Button settingsButton = new Button();
+        settingsButton.setGraphic(settingsImageView);
         settingsButton.setOnAction(event -> {
             if (settings != null) {
                 settings.run();
             }
         });
 
-        // Return to Main Menu button
-        Button mainMenuButton = new Button("Return to Main Menu");
-        mainMenuButton.setPrefWidth(200);
+        // Return to Main Menu button with image
+        Image mainMenuImage = new Image(getClass().getResource("/com/example/demo/images/exitbutton.jpg").toExternalForm());
+        ImageView mainMenuImageView = new ImageView(mainMenuImage);
+        mainMenuImageView.setFitWidth(50);
+        mainMenuImageView.setFitHeight(50);
+
+        Button mainMenuButton = new Button();
+        mainMenuButton.setGraphic(mainMenuImageView);
         mainMenuButton.setOnAction(event -> {
             MainMenu mainMenu = new MainMenu(stage);
             stage.setScene(mainMenu.getMainMenuScene());
             pauseStage.close();
         });
 
-        layout.getChildren().addAll(titleLabel, resumeButton, settingsButton, mainMenuButton);
+        layout.getChildren().addAll(resumeButton, settingsButton, mainMenuButton);
 
         Scene pauseScene = new Scene(layout, 400, 250);
         pauseStage.setScene(pauseScene);
