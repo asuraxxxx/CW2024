@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 import javafx.animation.*;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+
 public abstract class LevelParent {
 
     private static final double SCREEN_HEIGHT_ADJUSTMENT = 150;
@@ -25,6 +25,7 @@ public abstract class LevelParent {
     private final double screenHeight;
     private final double screenWidth;
     private final double enemyMaximumYPosition;
+    private boolean isPaused = false;
 
     private final Group root;
     private final Timeline timeline;
@@ -84,6 +85,31 @@ public abstract class LevelParent {
         timeline.play();
     }
 
+    public void pauseGame() {
+        if (!isPaused) {
+            timeline.pause();
+            isPaused = true;
+            showPauseScreen();
+        }
+    }
+
+    public void resumeGame() {
+        if (isPaused) {
+            timeline.play();
+            isPaused = false;
+            background.requestFocus();  // Ensure focus is set back to the background
+        }
+    }
+
+    private void showPauseScreen() {
+        PauseScreen pauseScreen = new PauseScreen((Stage) scene.getWindow(), this::resumeGame, this::showSettings);
+        pauseScreen.show();
+    }
+
+    private void showSettings() {
+        // Implement settings logic here
+    }
+
     public void goToNextLevel(String levelName) {
         levelProperty.set(levelName);
     }
@@ -93,18 +119,20 @@ public abstract class LevelParent {
     }
 
     private void updateScene() {
-        spawnEnemyUnits();
-        updateActors();
-        generateEnemyFire();
-        updateNumberOfEnemies();
-        handleEnemyPenetration();
-        handleUserProjectileCollisions();
-        handleEnemyProjectileCollisions();
-        handlePlaneCollisions();
-        removeAllDestroyedActors();
-        updateKillCount();
-        updateLevelView();
-        checkIfGameOver();
+        if (!isPaused) {
+            spawnEnemyUnits();
+            updateActors();
+            generateEnemyFire();
+            updateNumberOfEnemies();
+            handleEnemyPenetration();
+            handleUserProjectileCollisions();
+            handleEnemyProjectileCollisions();
+            handlePlaneCollisions();
+            removeAllDestroyedActors();
+            updateKillCount();
+            updateLevelView();
+            checkIfGameOver();
+        }
     }
 
     private void initializeTimeline() {
@@ -269,8 +297,12 @@ public abstract class LevelParent {
         currentNumberOfEnemies = enemyUnits.size();
     }
 
-    public void resumeTimeline() {
-        timeline.play();
+    public void removePauseMenu(VBox pauseMenu) {
+        root.getChildren().remove(pauseMenu);
+    }
+
+    public void addPauseMenu(VBox pauseMenu) {
+        root.getChildren().add(pauseMenu);
     }
 
     private void addPauseButton() {
@@ -279,11 +311,5 @@ public abstract class LevelParent {
         pauseButton.setLayoutY(20);
         pauseButton.setOnAction(e -> pauseGame());
         root.getChildren().add(pauseButton);
-    }
-
-    private void pauseGame() {
-        timeline.pause();
-        PauseScreen pauseScreen = new PauseScreen((Stage) scene.getWindow(), this);
-        pauseScreen.showPauseMenu();
     }
 }

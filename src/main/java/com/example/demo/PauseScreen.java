@@ -3,46 +3,70 @@ package com.example.demo;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 
 public class PauseScreen {
 
     private final Stage stage;
-    private final LevelParent currentLevel;
+    private final Runnable resume;
+    private final Runnable settings;
 
-    public PauseScreen(Stage stage, LevelParent currentLevel) {
+    public PauseScreen(Stage stage, Runnable resumeAction, Runnable settingsAction) {
         this.stage = stage;
-        this.currentLevel = currentLevel;
+        this.resume = resumeAction;
+        this.settings = settingsAction;
     }
 
-    public void showPauseMenu() {
-        VBox pauseMenu = new VBox(20);
-        pauseMenu.setAlignment(Pos.CENTER);
-        pauseMenu.setLayoutX(currentLevel.getScreenWidth() / 2 - 100);
-        pauseMenu.setLayoutY(currentLevel.getScreenHeight() / 2 - 100);
+    public void show() {
+        // Title Label
+        Label titleLabel = new Label("Game Paused");
+        titleLabel.setStyle("-fx-font-size: 48px; -fx-font-weight: bold; -fx-text-fill: #000000;");
+        titleLabel.setAlignment(Pos.CENTER);
 
-        Button resumeButton = new Button("Resume Game");
+        Stage pauseStage = new Stage();
+        pauseStage.initModality(Modality.APPLICATION_MODAL);
+        pauseStage.setTitle("Game Pause");
+
+        VBox layout = new VBox(20);
+        layout.setAlignment(Pos.CENTER);
+
+        // Resume button
+        Button resumeButton = new Button("Resume");
         resumeButton.setPrefWidth(200);
-        resumeButton.setPrefHeight(50);
-        resumeButton.setOnAction(e -> resumeGame(pauseMenu));
+        resumeButton.setOnAction(event -> {
+            if (resume != null) {
+                resume.run();
+            }
+            pauseStage.close();
+        });
 
-        Button exitButton = new Button("Exit to Main Menu");
-        exitButton.setPrefWidth(200);
-        exitButton.setPrefHeight(50);
-        exitButton.setOnAction(e -> exitToMainMenu());
+        // Settings button
+        Button settingsButton = new Button("Settings");
+        settingsButton.setPrefWidth(200);
+        settingsButton.setOnAction(event -> {
+            if (settings != null) {
+                settings.run();
+            }
+        });
 
-        pauseMenu.getChildren().addAll(resumeButton, exitButton);
-        currentLevel.getRoot().getChildren().add(pauseMenu);
-    }
+        // Return to Main Menu button
+        Button mainMenuButton = new Button("Return to Main Menu");
+        mainMenuButton.setPrefWidth(200);
+        mainMenuButton.setOnAction(event -> {
+            MainMenu mainMenu = new MainMenu(stage);
+            stage.setScene(mainMenu.getMainMenuScene());
+            pauseStage.close();
+        });
 
-    private void resumeGame(VBox pauseMenu) {
-        currentLevel.getRoot().getChildren().remove(pauseMenu);
-        currentLevel.resumeTimeline();
-    }
+        layout.getChildren().addAll(titleLabel, resumeButton, settingsButton, mainMenuButton);
 
-    private void exitToMainMenu() {
-        MainMenu mainMenu = new MainMenu(stage);
-        stage.setScene(mainMenu.getMainMenuScene());
+        Scene pauseScene = new Scene(layout, 400, 250);
+        pauseStage.setScene(pauseScene);
+        // Show the pause box until it is closed
+        pauseStage.showAndWait();
     }
 }
