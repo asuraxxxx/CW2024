@@ -308,8 +308,8 @@ public abstract class LevelParent {
     private void addPauseButton() {
         Image pauseImage = new Image(getClass().getResource("/com/example/demo/images/pausescreenbutton.png").toExternalForm());
         ImageView pauseImageView = new ImageView(pauseImage);
-        pauseImageView.setFitWidth(50);
-        pauseImageView.setFitHeight(50);
+        pauseImageView.setFitWidth(40);
+        pauseImageView.setFitHeight(40);
 
         Button pauseButton = new Button();
         pauseButton.setGraphic(pauseImageView);

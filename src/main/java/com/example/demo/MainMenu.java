@@ -15,9 +15,11 @@ import javafx.stage.Stage;
 public class MainMenu {
     private Stage primaryStage;
     private GameController gameController;
+    private static final String MENU_MUSIC = "/com/example/demo/audios/MainMenuMusic.mp3";
 
     public MainMenu(Stage stage) {
         this.primaryStage = stage;
+        MusicController.getInstance().playMusic(MENU_MUSIC); // Start background music
     }
 
     public Scene getMainMenuScene() {
@@ -56,6 +58,7 @@ public class MainMenu {
     }
 
     private void startGame() {
+        MusicController.getInstance().stopMusic(); // Stop main menu music
         gameController = new GameController(primaryStage);
         try {
             gameController.launchGame();
