@@ -26,20 +26,20 @@ public class MainMenu {
         VBox menuLayout = new VBox(30);
         menuLayout.setAlignment(Pos.CENTER);
 
-        Text title = new Text("Sky Battle");
-        title.setFont(Font.font("Arial", 60));
+        Text title = new Text("Battle Of Space");
+        title.setFont(Font.font("Times New Roman", 60));
         title.setStyle("-fx-fill: white;");
 
         Button startButton = new Button("Start Game");
         startButton.setPrefWidth(200);
         startButton.setPrefHeight(50);
-        startButton.setFont(Font.font("Arial", 20));
+        startButton.setFont(Font.font("Times New Roman", 20));
         startButton.setOnAction(e -> startGame());
 
         Button exitButton = new Button("Exit");
         exitButton.setPrefWidth(200);
         exitButton.setPrefHeight(50);
-        exitButton.setFont(Font.font("Arial", 20));
+        exitButton.setFont(Font.font("Times New Roman", 20));
         exitButton.setOnAction(e -> exitGame());
 
         menuLayout.getChildren().addAll(title, startButton, exitButton);
