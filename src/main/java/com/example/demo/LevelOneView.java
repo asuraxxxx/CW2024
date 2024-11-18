@@ -22,6 +22,10 @@ public class LevelOneView {
         this.gameOverImage = new GameOverImage(LOSS_SCREEN_X_POSITION, LOSS_SCREEN_Y_POSISITION);
     }
     
+    public Group getRoot() {
+        return root;
+    }
+
     public void showHeartDisplay() {
         root.getChildren().add(heartDisplay.getContainer());
     }

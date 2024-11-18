@@ -34,7 +34,7 @@ public class LevelBoss extends LevelParent {
     }
 
     @Override
-    protected LevelTwoView instantiateLevelView() {
+    protected LevelBossView instantiateLevelView() {
         levelView = new LevelBossView(getRoot(), PLAYER_INITIAL_HEALTH);
         return levelView;
     }
