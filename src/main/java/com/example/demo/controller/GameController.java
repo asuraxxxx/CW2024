@@ -2,14 +2,16 @@ package com.example.demo.controller;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import com.example.demo.LevelParent;
+import com.example.demo.LevelTransitionScreen;
+import javafx.animation.FadeTransition;
+import javafx.util.Duration;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 public class GameController {
 
@@ -35,22 +37,44 @@ public class GameController {
             myLevel.levelProperty().addListener(new ChangeListener<String>() {
                 @Override
                 public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                    try {
-                        goToLevel(newValue);
-                    } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
-                            | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                        showAlert(e);
+                    if (newValue != null && !newValue.isEmpty()) {
+                        LevelTransitionScreen.fadeOutCurrentScene(stage, () -> {
+                            LevelTransitionScreen transitionScene = new LevelTransitionScreen(stage, "Entering the next level...",
+                                    stage.getWidth(), stage.getHeight());
+                            transitionScene.showTransition(() -> {
+                                goToNextLevel(newValue);
+                            });
+                        });
                     }
                 }
             });
             Scene scene = myLevel.initializeScene();
             stage.setScene(scene);
             myLevel.startGame();
+            applyFadeInTransition(scene);
+    }
+
+    private void applyFadeInTransition(Scene scene) {
+        FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), scene.getRoot());
+        fadeIn.setFromValue(0);
+        fadeIn.setToValue(1);
+        fadeIn.setCycleCount(1);
+        fadeIn.setAutoReverse(false);
+        fadeIn.play();
+    }
+
+    private void goToNextLevel(String levelName) {
+        try {
+            goToLevel(levelName);
+        } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException
+                | IllegalAccessException | InvocationTargetException e) {
+            showAlert(e);
+        }
     }
 
     private void showAlert(Exception e) {
         Alert alert = new Alert(AlertType.ERROR);
-        alert.setContentText(e.getClass().toString());
+        alert.setContentText("Error occurred while loading level: " + e.getMessage());
         alert.show();
     }
 }
