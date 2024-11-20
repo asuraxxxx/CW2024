@@ -26,25 +26,25 @@ public class MainMenu {
         VBox menuLayout = new VBox(30);
         menuLayout.setAlignment(Pos.CENTER);
 
-        Text title = new Text("Battle Of Space");
-        title.setFont(Font.font("Times New Roman", 60));
-        title.setStyle("-fx-fill: white;");
+        Text title = new Text("Space Invaders");
+        title.setFont(Font.font("Impact", 60));
+        title.setStyle("-fx-fill: black;");
 
         Button startButton = new Button("Start Game");
         startButton.setPrefWidth(200);
         startButton.setPrefHeight(50);
-        startButton.setFont(Font.font("Times New Roman", 20));
+        startButton.setFont(Font.font("Impact", 20));
         startButton.setOnAction(e -> startGame());
 
         Button exitButton = new Button("Exit");
         exitButton.setPrefWidth(200);
         exitButton.setPrefHeight(50);
-        exitButton.setFont(Font.font("Times New Roman", 20));
+        exitButton.setFont(Font.font("Impact", 20));
         exitButton.setOnAction(e -> exitGame());
 
         menuLayout.getChildren().addAll(title, startButton, exitButton);
 
-        Image backgroundImage = new Image(getClass().getResource("/com/example/demo/images/background3.png").toExternalForm());
+        Image backgroundImage = new Image(getClass().getResource("/com/example/demo/images/background1.jpg").toExternalForm());
         ImageView backgroundImageView = new ImageView(backgroundImage);
         backgroundImageView.setFitWidth(1300);
         backgroundImageView.setFitHeight(750);
