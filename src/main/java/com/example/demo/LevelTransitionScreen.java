@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import javafx.animation.ScaleTransition;
+import javafx.animation.FadeTransition;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -21,8 +21,7 @@ public class LevelTransitionScreen {
         transitionText = new Text(message);
         transitionText.setFont(Font.font("Times New Roman", 55));
         transitionText.setFill(Color.BLACK);
-        transitionText.setScaleX(0);
-        transitionText.setScaleY(0);
+        transitionText.setOpacity(0); // Initially invisible
 
         Pane transitionPane = new Pane(transitionText);
         transitionPane.setStyle("-fx-background-color: white;");
@@ -33,16 +32,14 @@ public class LevelTransitionScreen {
     }
 
     public void showTransition(Runnable onTransitionEnd) {
-        // Zoom in the text
-        ScaleTransition zoomIn = new ScaleTransition(Duration.seconds(3), transitionText);
-        zoomIn.setFromX(0);
-        zoomIn.setToX(1);
-        zoomIn.setFromY(0);
-        zoomIn.setToY(1);
-        zoomIn.setOnFinished(e -> onTransitionEnd.run());
+        // Fade in the text
+        FadeTransition fadeIn = new FadeTransition(Duration.seconds(3), transitionText);
+        fadeIn.setFromValue(0);
+        fadeIn.setToValue(1);
+        fadeIn.setOnFinished(e -> onTransitionEnd.run());
 
         stage.setScene(transitionScene);
-        zoomIn.play();
+        fadeIn.play();
     }
 
     public Scene getTransitionScene() {
@@ -51,13 +48,11 @@ public class LevelTransitionScreen {
 
     public static void fadeOutCurrentScene(Stage stage, Runnable callback) {
         Scene currentScene = stage.getScene();
-        // Zoom out the current scene
-        ScaleTransition zoomOut = new ScaleTransition(Duration.seconds(1), currentScene.getRoot());
-        zoomOut.setFromX(1);
-        zoomOut.setToX(0);
-        zoomOut.setFromY(1);
-        zoomOut.setToY(0);
-        zoomOut.setOnFinished(event -> callback.run());
-        zoomOut.play();
+        // Fade out the current scene
+        FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), currentScene.getRoot());
+        fadeOut.setFromValue(1);
+        fadeOut.setToValue(0);
+        fadeOut.setOnFinished(event -> callback.run());
+        fadeOut.play();
     }
 }
