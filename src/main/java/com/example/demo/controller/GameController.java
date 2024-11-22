@@ -6,8 +6,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-import com.example.demo.LevelParent;
-import com.example.demo.LevelTransitionScreen;
+
+import com.example.demo.levels.LevelParent;
+import com.example.demo.levels.LevelTransitionScreen;
+
 import javafx.animation.FadeTransition;
 import javafx.util.Duration;
 import javafx.beans.value.ChangeListener;
@@ -15,7 +17,7 @@ import javafx.beans.value.ObservableValue;
 
 public class GameController {
 
-    private static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.LevelOne";
+    private static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.levels.LevelOne";
     private final Stage stage;
 
     public GameController(Stage stage) {

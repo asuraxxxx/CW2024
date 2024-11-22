@@ -1,8 +1,10 @@
-package com.example.demo;
+package com.example.demo.levels;
+
+import com.example.demo.ShieldImage;
 
 import javafx.scene.Group;
 
-public class LevelBossView extends LevelOneView {
+public class LevelBossView extends LevelView {
 
     private static final int SHIELD_X_POSITION = 355;
     private static final int SHIELD_Y_POSITION = 175;

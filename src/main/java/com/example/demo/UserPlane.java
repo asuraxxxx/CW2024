@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import com.example.demo.projectiles.UserProjectile;
+
 import javafx.geometry.Bounds;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;

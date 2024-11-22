@@ -2,14 +2,15 @@ package com.example.demo;
 
 import java.util.*;
 
-public class Boss extends FighterPlane {
+import com.example.demo.projectiles.BossProjectile;
+
+public class BossPlane extends FighterPlane {
 
     private static final String IMAGE_NAME = "bossplane.png";
     private static final double INITIAL_X_POSITION = 1000.0;
     private static final double INITIAL_Y_POSITION = 400;
     private static final double PROJECTILE_Y_POSITION_OFFSET = 75.0;
     private static final double BOSS_FIRE_RATE = .04;
-    private static final double BOSS_SHIELD_PROBABILITY = .002;
     private static final int IMAGE_HEIGHT = 300;
     private static final int VERTICAL_VELOCITY = 8;
     private static final int HEALTH = 10;
@@ -28,7 +29,7 @@ public class Boss extends FighterPlane {
     private int framesSinceLastShield;
     private final ShieldImage shieldImage;
 
-    public Boss(ShieldImage shieldImage) {
+    public BossPlane(ShieldImage shieldImage) {
         super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, HEALTH);
         this.shieldImage = shieldImage;
         movePattern = new ArrayList<>();
@@ -38,6 +39,7 @@ public class Boss extends FighterPlane {
         framesSinceLastShield = SHIELD_COOLDOWN_FRAMES; // Start with cooldown complete
         isShielded = false;
         initializeMovePattern();
+        activateShield(); // Immediately activate the shield when the level starts
     }
 
     @Override
@@ -86,7 +88,7 @@ public class Boss extends FighterPlane {
             }
         } else {
             framesSinceLastShield++;
-            if (shieldShouldBeActivated()) {
+            if (framesSinceLastShield >= SHIELD_COOLDOWN_FRAMES) {
                 activateShield();
             }
         }
@@ -112,10 +114,6 @@ public class Boss extends FighterPlane {
 
     private double getProjectileInitialPosition() {
         return getLayoutY() + getTranslateY() + PROJECTILE_Y_POSITION_OFFSET;
-    }
-
-    private boolean shieldShouldBeActivated() {
-        return framesSinceLastShield >= SHIELD_COOLDOWN_FRAMES && Math.random() < BOSS_SHIELD_PROBABILITY;
     }
 
     private boolean shieldExhausted() {

@@ -1,9 +1,14 @@
-package com.example.demo;
+package com.example.demo.levels;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import com.example.demo.ActiveActorDestructible;
+import com.example.demo.FighterPlane;
+import com.example.demo.PauseScreen;
+import com.example.demo.UserPlane;
 
 import javafx.animation.*;
 import javafx.event.EventHandler;
@@ -38,7 +43,7 @@ public abstract class LevelParent {
     private final List<ActiveActorDestructible> enemyProjectiles;
 
     private int currentNumberOfEnemies;
-    private LevelOneView levelView;
+    private LevelView levelView;
 
     private final StringProperty levelProperty;
 
@@ -69,7 +74,7 @@ public abstract class LevelParent {
 
     protected abstract void spawnEnemyUnits();
 
-    protected abstract LevelOneView instantiateLevelView();
+    protected abstract LevelView instantiateLevelView();
 
     public Scene initializeScene() {
         initializeBackground();

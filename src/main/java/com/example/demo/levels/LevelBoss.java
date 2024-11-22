@@ -1,10 +1,13 @@
-package com.example.demo;
+package com.example.demo.levels;
+
+import com.example.demo.BossPlane;
+import com.example.demo.ShieldImage;
 
 public class LevelBoss extends LevelParent {
 
     private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background2.jpg";
     private static final int PLAYER_INITIAL_HEALTH = 5;
-    private final Boss boss;
+    private final BossPlane boss;
     private final ShieldImage shieldImage;
     private LevelBossView levelView;
 
@@ -13,7 +16,7 @@ public class LevelBoss extends LevelParent {
 
         // Initialize the shield image at (0,0)
         shieldImage = new ShieldImage(0, 0);
-        boss = new Boss(shieldImage);
+        boss = new BossPlane(shieldImage);
 
         // Adjust the position of the shield image
         double xOffset = 100;  
