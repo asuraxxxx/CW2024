@@ -1,7 +1,6 @@
 package com.example.demo.levels;
 
 import com.example.demo.ShieldImage;
-
 import javafx.scene.Group;
 
 public class LevelBossView extends LevelView {
@@ -17,14 +16,22 @@ public class LevelBossView extends LevelView {
     }
 
     public void showShieldImage() {
-        shieldImage.showShield();
-        getRoot().getChildren().add(shieldImage);
-        System.out.println("Added Shield: " + shieldImage.isVisible());
+        try {
+            shieldImage.showShield();
+            getRoot().getChildren().add(shieldImage);
+            System.out.println("Added Shield: " + shieldImage.isVisible());
+        } catch (Exception e) {
+            System.err.println("Failed to add shield image: " + e.getMessage());
+        }
     }
 
     public void hideShieldImage() {
-        shieldImage.hideShield();
-        getRoot().getChildren().remove(shieldImage);
-        System.out.println("Removed Shield");
+        try {
+            shieldImage.hideShield();
+            getRoot().getChildren().remove(shieldImage);
+            System.out.println("Removed Shield");
+        } catch (Exception e) {
+            System.err.println("Failed to remove shield image: " + e.getMessage());
+        }
     }
 }
