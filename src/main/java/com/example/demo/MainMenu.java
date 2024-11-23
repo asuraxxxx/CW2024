@@ -26,7 +26,7 @@ public class MainMenu {
         VBox menuLayout = new VBox(30);
         menuLayout.setAlignment(Pos.CENTER);
 
-        Text title = new Text("Space Invaders");
+        Text title = new Text("Sky Invaders");
         title.setFont(Font.font("Impact", 60));
         title.setStyle("-fx-fill: black;");
 
@@ -36,13 +36,19 @@ public class MainMenu {
         startButton.setFont(Font.font("Impact", 20));
         startButton.setOnAction(e -> startGame());
 
+        Button instructionsButton = new Button("Instructions");
+        instructionsButton.setPrefWidth(200);
+        instructionsButton.setPrefHeight(50);
+        instructionsButton.setFont(Font.font("Impact", 20));
+        instructionsButton.setOnAction(e -> showInstructions());
+
         Button exitButton = new Button("Exit");
         exitButton.setPrefWidth(200);
         exitButton.setPrefHeight(50);
         exitButton.setFont(Font.font("Impact", 20));
         exitButton.setOnAction(e -> exitGame());
 
-        menuLayout.getChildren().addAll(title, startButton, exitButton);
+        menuLayout.getChildren().addAll(title, startButton, instructionsButton, exitButton);
 
         Image backgroundImage = new Image(getClass().getResource("/com/example/demo/images/background1.jpg").toExternalForm());
         ImageView backgroundImageView = new ImageView(backgroundImage);
@@ -66,6 +72,11 @@ public class MainMenu {
             System.err.println("Error launching game.");
             ex.printStackTrace();
         }
+    }
+
+    private void showInstructions() {
+        PauseScreen pauseScreen = new PauseScreen(primaryStage, null, null);
+        pauseScreen.showInstructions();
     }
 
     private void exitGame() {

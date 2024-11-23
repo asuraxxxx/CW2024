@@ -318,6 +318,7 @@ public abstract class LevelParent {
 
         Button pauseButton = new Button();
         pauseButton.setGraphic(pauseImageView);
+        pauseButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
         pauseButton.setLayoutX(screenWidth - 100);
         pauseButton.setLayoutY(20);
         pauseButton.setOnAction(e -> pauseGame());
