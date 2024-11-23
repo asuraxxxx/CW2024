@@ -19,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -46,6 +47,7 @@ public abstract class LevelParent {
     private LevelView levelView;
 
     private final StringProperty levelProperty;
+    protected final Text statusText; // Changed to protected
 
     public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
         this.root = new Group();
@@ -64,6 +66,7 @@ public abstract class LevelParent {
         this.levelView = instantiateLevelView();
         this.currentNumberOfEnemies = 0;
         this.levelProperty = new SimpleStringProperty();
+        this.statusText = new Text();
         initializeTimeline();
         friendlyUnits.add(user);
     }
@@ -81,6 +84,7 @@ public abstract class LevelParent {
         initializeFriendlyUnits();
         levelView.showHeartDisplay();
         addPauseButton();
+        initializeStatusText();
         return scene;
     }
 
@@ -104,7 +108,6 @@ public abstract class LevelParent {
             background.requestFocus();  // Ensure focus is set back to the background
         }
     }
-
 
     private void showPauseScreen() {
         PauseScreen pauseScreen = new PauseScreen((Stage) scene.getWindow(), this::resumeGame, this::showSettings);
@@ -137,6 +140,7 @@ public abstract class LevelParent {
             updateKillCount();
             updateLevelView();
             checkIfGameOver();
+            updateStatusText();
         }
     }
 
@@ -202,7 +206,7 @@ public abstract class LevelParent {
     }
 
     private void removeDestroyedActors(List<ActiveActorDestructible> actors) {
-        List<ActiveActorDestructible> destroyedActors = actors.stream().filter(actor -> actor.isDestroyed())
+        List<ActiveActorDestructible> destroyedActors = actors.stream().filter(ActiveActorDestructible::isDestroyed)
                 .collect(Collectors.toList());
         root.getChildren().removeAll(destroyedActors);
         actors.removeAll(destroyedActors);
@@ -221,7 +225,7 @@ public abstract class LevelParent {
     }
 
     private void handleCollisions(List<ActiveActorDestructible> actors1,
-            List<ActiveActorDestructible> actors2) {
+                                  List<ActiveActorDestructible> actors2) {
         for (ActiveActorDestructible actor : actors2) {
             for (ActiveActorDestructible otherActor : actors1) {
                 if (actor.getBoundsInParent().intersects(otherActor.getBoundsInParent())) {
@@ -325,4 +329,27 @@ public abstract class LevelParent {
         root.getChildren().add(pauseButton);
     }
 
+    private void initializeStatusText() {
+        statusText.setLayoutY(20); // Default vertical position
+        statusText.setStyle("-fx-font-size: 20px; -fx-fill: black; -fx-font-family: 'Impact';");
+        root.getChildren().add(statusText);
+        centerStatusText();
+        
+        // Add a listener to update the position whenever the text changes
+        statusText.textProperty().addListener((observable, oldValue, newValue) -> centerStatusText());
+    }
+
+    protected void setStatusTextPosition(double x, double y) {
+        statusText.setLayoutX(x);
+        statusText.setLayoutY(y);
+    }
+
+    private void centerStatusText() {
+        double centerX = (screenWidth / 2) - (statusText.getBoundsInLocal().getWidth() / 2);
+        setStatusTextPosition(centerX, 20);
+    }
+
+    protected void updateStatusText() {
+        // This method will be overridden in subclasses to update the status text
+    }
 }

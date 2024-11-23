@@ -4,7 +4,7 @@ import com.example.demo.ActiveActorDestructible;
 import com.example.demo.EnemyPlane;
 
 public class LevelOne extends LevelParent {
-    
+
     private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background2.jpg";
     private static final String NEXT_LEVEL = "com.example.demo.levels.LevelTwo";
     private static final int TOTAL_ENEMIES = 5;
@@ -49,5 +49,11 @@ public class LevelOne extends LevelParent {
 
     private boolean userHasReachedKillTarget() {
         return getUser().getNumberOfKills() >= KILLS_TO_ADVANCE;
+    }
+
+    @Override
+    protected void updateStatusText() {
+        int killsRemaining = KILLS_TO_ADVANCE - getUser().getNumberOfKills();
+        statusText.setText("Remaining enemies to advance the next level: " + killsRemaining);
     }
 }

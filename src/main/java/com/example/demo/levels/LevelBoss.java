@@ -66,4 +66,9 @@ public class LevelBoss extends LevelParent {
         levelView = new LevelBossView(getRoot(), PLAYER_INITIAL_HEALTH);
         return levelView;
     }
+
+    @Override
+    protected void updateStatusText() {
+        statusText.setText("Remaining boss health: " + boss.getHealth());
+    }
 }

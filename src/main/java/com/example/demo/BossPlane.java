@@ -51,7 +51,7 @@ public class BossPlane extends FighterPlane {
             setTranslateY(initialTranslateY);
         }
     }
-    
+
     @Override
     public void updateActor() {
         updatePosition();
@@ -62,7 +62,7 @@ public class BossPlane extends FighterPlane {
     public ActiveActorDestructible fireProjectile() {
         return bossFiresInCurrentFrame() ? new BossProjectile(getProjectileInitialPosition()) : null;
     }
-    
+
     @Override
     public void takeDamage() {
         if (!shieldImage.isVisible()) {

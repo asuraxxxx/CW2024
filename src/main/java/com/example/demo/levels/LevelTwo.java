@@ -50,4 +50,10 @@ public class LevelTwo extends LevelParent {
     private boolean userHasReachedKillTarget() {
         return getUser().getNumberOfKills() >= KILLS_TO_ADVANCE;
     }
+
+    @Override
+    protected void updateStatusText() {
+        int killsRemaining = KILLS_TO_ADVANCE - getUser().getNumberOfKills();
+        statusText.setText("Remaining enemies to advance the next level: " + killsRemaining);
+    }
 }
