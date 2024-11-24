@@ -4,8 +4,8 @@ module com.example.demo {
     requires transitive javafx.graphics;
     requires javafx.media;
 
-    opens com.example.demo to javafx.fxml;
+    opens com.example.demo.ui.images to javafx.fxml;
     exports com.example.demo.controller;
-    exports com.example.demo.projectiles;
+    exports com.example.demo.actors.projectiles;
     exports com.example.demo.levels;
 }

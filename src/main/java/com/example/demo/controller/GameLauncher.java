@@ -2,8 +2,9 @@ package com.example.demo.controller;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import com.example.demo.MainMenu;
-import com.example.demo.MusicController;
+
+import com.example.demo.audio.MusicController;
+import com.example.demo.ui.MainMenu;
 
 public class GameLauncher extends Application {
 

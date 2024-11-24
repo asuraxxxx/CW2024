@@ -1,6 +1,7 @@
-package com.example.demo;
+package com.example.demo.actors.planes;
 
-import com.example.demo.projectiles.UserProjectile;
+import com.example.demo.actors.ActiveActorDestructible;
+import com.example.demo.actors.projectiles.UserProjectile;
 
 import javafx.geometry.Bounds;
 import javafx.scene.paint.Color;

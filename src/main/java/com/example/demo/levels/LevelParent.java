@@ -5,10 +5,10 @@ import javafx.beans.property.StringProperty;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import com.example.demo.ActiveActorDestructible;
-import com.example.demo.FighterPlane;
-import com.example.demo.PauseScreen;
-import com.example.demo.UserPlane;
+import com.example.demo.actors.ActiveActorDestructible;
+import com.example.demo.actors.planes.FighterPlane;
+import com.example.demo.actors.planes.UserPlane;
+import com.example.demo.ui.PauseScreen;
 
 import javafx.animation.*;
 import javafx.event.EventHandler;

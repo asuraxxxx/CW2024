@@ -1,6 +1,7 @@
 package com.example.demo.levels;
 
-import com.example.demo.ShieldImage;
+import com.example.demo.ui.images.ShieldImage;
+
 import javafx.scene.Group;
 
 public class LevelBossView extends LevelView {

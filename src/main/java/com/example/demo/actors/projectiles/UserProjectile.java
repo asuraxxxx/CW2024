@@ -1,4 +1,4 @@
-package com.example.demo.projectiles;
+package com.example.demo.actors.projectiles;
 
 import java.net.URL;
 import javafx.scene.media.AudioClip;

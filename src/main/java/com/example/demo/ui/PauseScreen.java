@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.ui;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

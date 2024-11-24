@@ -1,6 +1,8 @@
-package com.example.demo;
+package com.example.demo.ui;
 
+import com.example.demo.audio.MusicController;
 import com.example.demo.controller.GameController;
+
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

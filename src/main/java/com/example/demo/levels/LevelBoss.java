@@ -1,7 +1,7 @@
 package com.example.demo.levels;
 
-import com.example.demo.BossPlane;
-import com.example.demo.ShieldImage;
+import com.example.demo.actors.planes.BossPlane;
+import com.example.demo.ui.images.ShieldImage;
 
 public class LevelBoss extends LevelParent {
 
