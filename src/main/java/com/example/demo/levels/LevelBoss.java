@@ -19,8 +19,8 @@ public class LevelBoss extends LevelParent {
         boss = new BossPlane(shieldImage);
 
         // Adjust the position of the shield image
-        double xOffset = 100;  
-        double yOffset = 100; 
+        double xOffset = 30;  // Adjusted value to move the shield more to the left
+        double yOffset = 150; // Keep this value as needed
 
         // Match the shield's X position with the boss plane's X position
         shieldImage.layoutXProperty().bind(
