@@ -90,12 +90,12 @@ public abstract class LevelParent {
 
     public void startGame() {
         background.requestFocus();
-        timeline.play();
+        getTimeline().play();
     }
 
     public void pauseGame() {
         if (!isPaused) {
-            timeline.pause();
+            getTimeline().pause();
             isPaused = true;
             showPauseScreen();
         }
@@ -103,7 +103,7 @@ public abstract class LevelParent {
 
     public void resumeGame() {
         if (isPaused) {
-            timeline.play();
+            getTimeline().play();
             isPaused = false;
             background.requestFocus();  // Ensure focus is set back to the background
         }
@@ -145,9 +145,9 @@ public abstract class LevelParent {
     }
 
     private void initializeTimeline() {
-        timeline.setCycleCount(Timeline.INDEFINITE);
+        getTimeline().setCycleCount(Timeline.INDEFINITE);
         KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> updateScene());
-        timeline.getKeyFrames().add(gameLoop);
+        getTimeline().getKeyFrames().add(gameLoop);
     }
 
     private void initializeBackground() {
@@ -260,12 +260,12 @@ public abstract class LevelParent {
     }
 
     protected void winGame() {
-        timeline.stop();
-        levelView.showWinImage();
+        getTimeline().stop();
+        // Removed: levelView.showWinImage();
     }
 
     protected void loseGame() {
-        timeline.stop();
+        getTimeline().stop();
         levelView.showGameOverImage();
     }
 
@@ -317,8 +317,8 @@ public abstract class LevelParent {
     private void addPauseButton() {
         Image pauseImage = new Image(getClass().getResource("/com/example/demo/images/pausescreenbutton.png").toExternalForm());
         ImageView pauseImageView = new ImageView(pauseImage);
-        pauseImageView.setFitWidth(40);
-        pauseImageView.setFitHeight(40);
+        pauseImageView.setFitWidth(50);
+        pauseImageView.setFitHeight(50);
 
         Button pauseButton = new Button();
         pauseButton.setGraphic(pauseImageView);
@@ -352,4 +352,8 @@ public abstract class LevelParent {
     protected void updateStatusText() {
         // This method will be overridden in subclasses to update the status text
     }
+
+	public Timeline getTimeline() {
+		return timeline;
+	}
 }

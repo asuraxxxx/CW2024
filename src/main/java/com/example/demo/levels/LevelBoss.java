@@ -2,6 +2,8 @@ package com.example.demo.levels;
 
 import com.example.demo.actors.planes.BossPlane;
 import com.example.demo.ui.images.ShieldImage;
+import com.example.demo.ui.WinGameScreen;
+import javafx.stage.Stage;
 
 public class LevelBoss extends LevelParent {
 
@@ -70,5 +72,13 @@ public class LevelBoss extends LevelParent {
     @Override
     protected void updateStatusText() {
         statusText.setText("Remaining boss health: " + boss.getHealth());
+    }
+
+    @Override
+    protected void winGame() {
+        getTimeline().stop();
+        Stage stage = (Stage) getRoot().getScene().getWindow();
+        WinGameScreen winGameScreen = new WinGameScreen(stage);
+        winGameScreen.show();
     }
 }

@@ -32,7 +32,7 @@ public class PauseScreen {
 
         BorderPane rootLayout = new BorderPane();
         BackgroundImage backgroundImage = new BackgroundImage(
-            new Image(this.getClass().getResource("/com/example/demo/images/pausescreen.jpg").toExternalForm()),
+            new Image(this.getClass().getResource("/com/example/demo/images/pausescreen.png").toExternalForm()),
             BackgroundRepeat.NO_REPEAT,
             BackgroundRepeat.NO_REPEAT,
             BackgroundPosition.CENTER,
@@ -50,16 +50,16 @@ public class PauseScreen {
             System.err.println("Error loading font: " + e.getMessage());
         }
 
-        Label titleLabel = new Label("Game Paused");
+        Label titleLabel = new Label("Game Paused!");
         if (titleFont != null) {
             titleLabel.setFont(titleFont);
         }
-        titleLabel.setStyle("-fx-text-fill: #000000;");
+        titleLabel.setStyle("-fx-text-fill: white;");
 
         Image resumeImage = new Image(getClass().getResource("/com/example/demo/images/resumebutton.jpg").toExternalForm());
         ImageView resumeImageView = new ImageView(resumeImage);
-        resumeImageView.setFitWidth(40);
-        resumeImageView.setFitHeight(40);
+        resumeImageView.setFitWidth(30);
+        resumeImageView.setFitHeight(30);
 
         Button resumeButton = new Button();
         resumeButton.setGraphic(resumeImageView);
@@ -72,8 +72,8 @@ public class PauseScreen {
 
         Image settingsImage = new Image(getClass().getResource("/com/example/demo/images/settingbutton.jpg").toExternalForm());
         ImageView settingsImageView = new ImageView(settingsImage);
-        settingsImageView.setFitWidth(40);
-        settingsImageView.setFitHeight(40);
+        settingsImageView.setFitWidth(30);
+        settingsImageView.setFitHeight(30);
 
         Button settingsButton = new Button();
         settingsButton.setGraphic(settingsImageView);
@@ -86,8 +86,8 @@ public class PauseScreen {
 
         Image mainMenuImage = new Image(getClass().getResource("/com/example/demo/images/exitbutton.jpg").toExternalForm());
         ImageView mainMenuImageView = new ImageView(mainMenuImage);
-        mainMenuImageView.setFitWidth(40);
-        mainMenuImageView.setFitHeight(40);
+        mainMenuImageView.setFitWidth(30);
+        mainMenuImageView.setFitHeight(30);
 
         Button mainMenuButton = new Button();
         mainMenuButton.setGraphic(mainMenuImageView);
@@ -100,12 +100,11 @@ public class PauseScreen {
         layout.getChildren().addAll(titleLabel, resumeButton, settingsButton, mainMenuButton);
         rootLayout.setCenter(layout);
 
-        Scene pauseScene = new Scene(rootLayout, 500, 300);
+        Scene pauseScene = new Scene(rootLayout, 500, 350);
         pauseScene.setFill(null);
         pauseStage.setScene(pauseScene);
         pauseStage.showAndWait();
     }
-
     public void showSettings() {
         Stage settingsStage = new Stage();
         settingsStage.initModality(Modality.APPLICATION_MODAL);
@@ -113,7 +112,7 @@ public class PauseScreen {
 
         BorderPane rootLayout = new BorderPane();
         BackgroundImage backgroundImage = new BackgroundImage(
-            new Image(this.getClass().getResource("/com/example/demo/images/pausescreen.jpg").toExternalForm()),
+            new Image(this.getClass().getResource("/com/example/demo/images/pausescreen.png").toExternalForm()),
             BackgroundRepeat.NO_REPEAT,
             BackgroundRepeat.NO_REPEAT,
             BackgroundPosition.CENTER,
@@ -136,7 +135,7 @@ public class PauseScreen {
         if (buttonFont != null) {
             settingsLabel.setFont(buttonFont);
         }
-        settingsLabel.setStyle("-fx-text-fill: #000000;");
+        settingsLabel.setStyle("-fx-text-fill: white;");
         layout.getChildren().add(settingsLabel);
 
         Button instructionButton = new Button("Instructions");
@@ -155,7 +154,7 @@ public class PauseScreen {
 
         rootLayout.setCenter(layout);
 
-        Scene settingsScene = new Scene(rootLayout, 350, 250);
+        Scene settingsScene = new Scene(rootLayout, 400, 300);
         settingsScene.setFill(null);
         settingsStage.setScene(settingsScene);
         settingsStage.showAndWait();
@@ -168,7 +167,7 @@ public class PauseScreen {
 
         BorderPane rootLayout = new BorderPane();
         BackgroundImage backgroundImage = new BackgroundImage(
-            new Image(this.getClass().getResource("/com/example/demo/images/pausescreen.jpg").toExternalForm()),
+            new Image(this.getClass().getResource("/com/example/demo/images/pausescreen.png").toExternalForm()),
             BackgroundRepeat.NO_REPEAT,
             BackgroundRepeat.NO_REPEAT,
             BackgroundPosition.CENTER,
@@ -191,13 +190,17 @@ public class PauseScreen {
         if (buttonFont != null) {
             instructionsLabel.setFont(buttonFont);
         }
-        instructionsLabel.setStyle("-fx-text-fill: #000000;");
+        instructionsLabel.setStyle("-fx-text-fill: white;");
         layout.getChildren().add(instructionsLabel);
 
         Label step1 = new Label("1. Use arrow keys to move.");
-        Label step2 = new Label("2. Press space to shoot.");
+        step1.setStyle("-fx-text-fill: white;");
+        Label step2 = new Label("2. Press space key to shoot.");
+        step2.setStyle("-fx-text-fill: white;");
         Label step3 = new Label("3. Avoid enemies and their projectiles to stay alive.");
+        step3.setStyle("-fx-text-fill: white;");
         Label step4 = new Label("4. Complete all three levels to win.");
+        step4.setStyle("-fx-text-fill: white;");
         layout.getChildren().addAll(step1, step2, step3, step4);
 
         Button closeButton = new Button("Close");
@@ -209,7 +212,7 @@ public class PauseScreen {
 
         rootLayout.setCenter(layout);
 
-        Scene instructionsScene = new Scene(rootLayout, 350, 250);
+        Scene instructionsScene = new Scene(rootLayout, 400, 300);
         instructionsScene.setFill(null);
         instructionsStage.setScene(instructionsScene);
         instructionsStage.showAndWait();
