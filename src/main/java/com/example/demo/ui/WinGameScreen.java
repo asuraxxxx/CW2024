@@ -1,5 +1,6 @@
 package com.example.demo.ui;
 
+import com.example.demo.controller.GameController;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,12 +15,24 @@ import javafx.geometry.Pos;
 
 public class WinGameScreen {
 
+    private final Stage stage;
     private final Button restartLevelButton;
     private final Button returnToMainMenuButton;
 
     public WinGameScreen(Stage stage) {
-        this.restartLevelButton = new Button("Restart Level");
-        this.returnToMainMenuButton = new Button("Return to Main Menu");
+        this.stage = stage;
+        this.restartLevelButton = createImageButton("/com/example/demo/images/restartbutton.jpg");
+        this.returnToMainMenuButton = createImageButton("/com/example/demo/images/exitbutton.jpg");
+    }
+
+    private Button createImageButton(String imagePath) {
+        Image image = new Image(getClass().getResource(imagePath).toExternalForm());
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(50);  // Adjust the size as needed
+        imageView.setFitHeight(50);  // Adjust the size as needed
+        Button button = new Button();
+        button.setGraphic(imageView);
+        return button;
     }
 
     public void show() {
@@ -53,6 +66,23 @@ public class WinGameScreen {
                 titleLabel.setFont(titleFont);
             }
             titleLabel.setStyle("-fx-text-fill: white;");
+
+            restartLevelButton.setOnAction(event -> {
+                GameController gameController = new GameController(stage);
+                try {
+                    gameController.launchGame();
+                } catch (Exception ex) {
+                    System.err.println("Error restarting game.");
+                    ex.printStackTrace();
+                }
+                winStage.close();
+            });
+
+            returnToMainMenuButton.setOnAction(event -> {
+                MainMenu mainMenu = new MainMenu(stage);
+                stage.setScene(mainMenu.getMainMenuScene());
+                winStage.close();
+            });
 
             layout.getChildren().addAll(titleLabel, restartLevelButton, returnToMainMenuButton);
             rootLayout.setCenter(layout);

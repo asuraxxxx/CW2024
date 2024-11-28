@@ -138,17 +138,30 @@ public class PauseScreen {
         settingsLabel.setStyle("-fx-text-fill: white;");
         layout.getChildren().add(settingsLabel);
 
-        Button instructionButton = new Button("Instructions");
+        // Adjust button size and image
+        Button instructionButton = new Button();
+        instructionButton.setPrefWidth(45);
+        instructionButton.setPrefHeight(45);
         if (buttonFont != null) {
             instructionButton.setFont(buttonFont);
         }
+        ImageView instructionImageView = new ImageView(new Image(this.getClass().getResource("/com/example/demo/images/instructionbutton.jpg").toExternalForm()));
+        instructionImageView.setFitWidth(45); // Set desired width
+        instructionImageView.setFitHeight(45); // Set desired height
+        instructionButton.setGraphic(instructionImageView);
         instructionButton.setOnAction(event -> showInstructions());
         layout.getChildren().add(instructionButton);
 
-        Button closeButton = new Button("Close");
+        Button closeButton = new Button();
+        closeButton.setPrefWidth(30);
+        closeButton.setPrefHeight(30);
         if (buttonFont != null) {
             closeButton.setFont(buttonFont);
         }
+        ImageView closeImageView = new ImageView(new Image(this.getClass().getResource("/com/example/demo/images/closebutton.jpg").toExternalForm()));
+        closeImageView.setFitWidth(30); // Set desired width
+        closeImageView.setFitHeight(30); // Set desired height
+        closeButton.setGraphic(closeImageView);
         closeButton.setOnAction(event -> settingsStage.close());
         layout.getChildren().add(closeButton);
 
@@ -203,10 +216,16 @@ public class PauseScreen {
         step4.setStyle("-fx-text-fill: white;");
         layout.getChildren().addAll(step1, step2, step3, step4);
 
-        Button closeButton = new Button("Close");
+        Button closeButton = new Button();
+        closeButton.setPrefWidth(30);
+        closeButton.setPrefHeight(30);
         if (buttonFont != null) {
             closeButton.setFont(buttonFont);
         }
+        ImageView closeImageView = new ImageView(new Image(this.getClass().getResource("/com/example/demo/images/closebutton.jpg").toExternalForm()));
+        closeImageView.setFitWidth(30); // Set desired width
+        closeImageView.setFitHeight(30); // Set desired height
+        closeButton.setGraphic(closeImageView);
         closeButton.setOnAction(event -> instructionsStage.close());
         layout.getChildren().add(closeButton);
 
@@ -217,4 +236,4 @@ public class PauseScreen {
         instructionsStage.setScene(instructionsScene);
         instructionsStage.showAndWait();
     }
-}
+    }
