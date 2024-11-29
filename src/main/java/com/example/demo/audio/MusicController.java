@@ -5,7 +5,6 @@ import javafx.scene.media.MediaPlayer;
 import java.net.URL;
 
 public class MusicController {
-
     private static MusicController instance;
     private MediaPlayer mediaPlayer;
     private double volume = 0.5; // Default volume
