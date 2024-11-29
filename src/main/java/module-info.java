@@ -6,6 +6,5 @@ module com.example.demo {
 
     opens com.example.demo.ui.images to javafx.fxml;
     exports com.example.demo.controller;
-    exports com.example.demo.actors.projectiles;
     exports com.example.demo.levels;
 }
