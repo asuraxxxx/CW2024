@@ -9,11 +9,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * The BossPlane class represents a powerful boss plane in the game.
+ * It extends the FighterPlane class and includes additional features
+ * such as a shield and a complex movement pattern.
+ */
 public class BossPlane extends FighterPlane {
-    private final ShieldActivation shield;
-    private final List<Integer> movePattern;
-    private int indexOfCurrentMove;
+    private final ShieldActivation shield; // Shield activation for the BossPlane
+    private final List<Integer> movePattern; // List to store the movement pattern
+    private int indexOfCurrentMove; // Index to track the current move in the pattern
 
+    /**
+     * Constructor for BossPlane.
+     * Initializes the plane with specific attributes and activates the shield.
+     * @param shieldImage The image used for the shield.
+     */
     public BossPlane(ShieldImage shieldImage) {
         super("bossplane.png", 300, 1000.0, 400, 10);
         this.setLayoutY(200); // Set a higher initial position
@@ -25,6 +35,10 @@ public class BossPlane extends FighterPlane {
         shield.activateShield();
     }
 
+    /**
+     * Initializes the movement pattern for the BossPlane.
+     * The pattern includes various speeds and directions.
+     */
     private void initializeMovePattern() {
         for (int i = 0; i < 10; i++) {
             movePattern.add(16);  // Move down much faster
@@ -40,6 +54,10 @@ public class BossPlane extends FighterPlane {
         Collections.shuffle(movePattern);
     }
 
+    /**
+     * Updates the position of the BossPlane based on the current move pattern.
+     * Ensures the plane does not move out of the allowed vertical bounds.
+     */
     @Override
     public void updatePosition() {
         int move = movePattern.get(indexOfCurrentMove);
@@ -59,12 +77,20 @@ public class BossPlane extends FighterPlane {
         System.out.println("Current Position: " + currentPosition);
     }
 
+    /**
+     * Updates the state of the BossPlane.
+     * This includes updating its position and the shield status.
+     */
     @Override
     public void updateActor() {
         updatePosition();
         shield.updateShield();
     }
 
+    /**
+     * Handles the damage taken by the BossPlane.
+     * Damage is only taken if the shield is not active.
+     */
     @Override
     public void takeDamage() {
         if (!shield.isShielded()) {
@@ -72,6 +98,10 @@ public class BossPlane extends FighterPlane {
         }
     }
 
+    /**
+     * Calculates the initial position for the projectiles fired by the BossPlane.
+     * @return The initial Y position for the projectiles.
+     */
     private double getProjectileInitialPosition() {
         return getLayoutY() + getTranslateY() + 75.0;
     }
