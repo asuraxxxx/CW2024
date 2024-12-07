@@ -113,7 +113,7 @@ public class LevelBoss extends LevelParent {
      */
     @Override
     protected void winGame() {
-        getTimeline().stop();
+        getTimelineManager().stop();
         Stage stage = (Stage) getRoot().getScene().getWindow();
         WinGameScreen winGameScreen = new WinGameScreen(stage);
         winGameScreen.show();
