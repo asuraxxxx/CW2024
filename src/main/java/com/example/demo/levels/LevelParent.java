@@ -8,16 +8,15 @@ import java.util.stream.Collectors;
 import com.example.demo.actors.ActiveActorDestructible;
 import com.example.demo.actors.planes.FighterPlane;
 import com.example.demo.actors.planes.UserPlane;
+import com.example.demo.managers.InputManager;
 import com.example.demo.ui.PauseScreen;
 
 import javafx.animation.*;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -27,7 +26,7 @@ import javafx.util.Duration;
  * The LevelParent class is an abstract class that provides the common functionality
  * for all game levels, including managing the game loop, user input, and game state.
  */
-public abstract class LevelParent {
+public abstract class LevelParent implements InputManager.ProjectileFiredListener {
 
     // Constants for screen adjustments and timing
     private static final double SCREEN_HEIGHT_ADJUSTMENT = 150;
@@ -64,6 +63,9 @@ public abstract class LevelParent {
     // Status text for displaying game information
     protected final Text statusText; // Changed to protected
 
+    // Input handler
+    public InputManager inputHandler;
+
     /**
      * Constructor for LevelParent.
      * 
@@ -92,6 +94,9 @@ public abstract class LevelParent {
         this.statusText = new Text();
         initializeTimeline();
         friendlyUnits.add(user);
+
+        // Initialize input handler
+        this.inputHandler = new InputManager(user, background, this);
     }
 
     // Abstract methods to be implemented by subclasses
@@ -208,39 +213,12 @@ public abstract class LevelParent {
     }
 
     /**
-     * Initializes the background image and sets up key event handlers for user input.
+     * Initializes the background image.
      */
     private void initializeBackground() {
-        background.setFocusTraversable(true);
         background.setFitHeight(screenHeight);
         background.setFitWidth(screenWidth);
-        background.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent e) {
-                KeyCode kc = e.getCode();
-                if (kc == KeyCode.UP) user.moveUp();
-                if (kc == KeyCode.DOWN) user.moveDown();
-                if (kc == KeyCode.LEFT) user.moveLeft();
-                if (kc == KeyCode.RIGHT) user.moveRight();
-                if (kc == KeyCode.SPACE) fireProjectile();
-            }
-        });
-        background.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent e) {
-                KeyCode kc = e.getCode();
-                if (kc == KeyCode.UP || kc == KeyCode.DOWN) user.stopVerticalMovement();
-                if (kc == KeyCode.LEFT || kc == KeyCode.RIGHT) user.stopHorizontalMovement();
-            }
-        });
         root.getChildren().add(background);
-    }
-
-    /**
-     * Fires a projectile from the user's plane and adds it to the scene and the list of user projectiles.
-     */
-    private void fireProjectile() {
-        ActiveActorDestructible projectile = user.fireProjectile();
-        root.getChildren().add(projectile);
-        userProjectiles.add(projectile);
     }
 
     /**
@@ -249,7 +227,7 @@ public abstract class LevelParent {
     private void generateEnemyFire() {
         enemyUnits.forEach(enemy -> spawnEnemyProjectile(((FighterPlane) enemy).fireProjectile()));
     }
-
+    
     /**
      * Spawns an enemy projectile and adds it to the scene and the list of enemy projectiles.
      * 
@@ -549,5 +527,18 @@ public abstract class LevelParent {
      */
     public Timeline getTimeline() {
         return timeline;
+    }
+
+    /**
+     * Handles the event when a projectile is fired.
+     * 
+     * @param projectile The projectile that was fired.
+     */
+    @Override
+    public void onProjectileFired(ActiveActorDestructible projectile) {
+        if (projectile != null) {
+            root.getChildren().add(projectile);
+            userProjectiles.add(projectile);
+        }
     }
 }
