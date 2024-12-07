@@ -8,6 +8,7 @@ import com.example.demo.actors.planes.FighterPlane;
 import com.example.demo.actors.planes.UserPlane;
 import com.example.demo.managers.ActorManager;
 import com.example.demo.managers.CollisionManager;
+import com.example.demo.managers.GameStateManager;
 import com.example.demo.managers.InputManager;
 import com.example.demo.managers.TimelineManager;
 import com.example.demo.ui.PauseScreen;
@@ -52,6 +53,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
 
     private final ActorManager actorManager;
     private final CollisionManager collisionManager;
+    private final GameStateManager gameStateManager;
 
     public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
         this.root = new Group();
@@ -76,6 +78,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
         this.inputHandler = new InputManager(user, background, this);
         this.actorManager = new ActorManager(root, friendlyUnits, enemyUnits, userProjectiles, enemyProjectiles);
         this.collisionManager = new CollisionManager();
+        this.gameStateManager = new GameStateManager(this, levelView);
     }
 
     protected abstract void initializeFriendlyUnits();
@@ -189,13 +192,11 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
     }
 
     protected void winGame() {
-        timelineManager.stop();
-        // Removed: levelView.showWinImage();
+        gameStateManager.winGame();
     }
 
     protected void loseGame() {
-        timelineManager.stop();
-        levelView.showGameOverImage();
+        gameStateManager.loseGame();
     }
 
     protected UserPlane getUser() {
@@ -276,7 +277,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
         double centerX = (screenWidth / 2) - (statusText.getBoundsInLocal().getWidth() / 2);
         setStatusTextPosition(centerX, 20);
     }
-
+    
     protected void updateStatusText() {
         // This method will be overridden in subclasses to update the status text
     }
@@ -289,7 +290,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
         }
     }
 
-    protected TimelineManager getTimelineManager() {
+    public TimelineManager getTimelineManager() {
         return timelineManager;
     }
 }
