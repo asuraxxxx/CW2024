@@ -7,6 +7,7 @@ import com.example.demo.actors.ActiveActorDestructible;
 import com.example.demo.actors.planes.FighterPlane;
 import com.example.demo.actors.planes.UserPlane;
 import com.example.demo.managers.ActorManager;
+import com.example.demo.managers.CollisionManager;
 import com.example.demo.managers.InputManager;
 import com.example.demo.ui.PauseScreen;
 import javafx.animation.*;
@@ -52,6 +53,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
     public InputManager inputHandler;
 
     private final ActorManager actorManager;
+    private final CollisionManager collisionManager;
 
     public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
         this.root = new Group();
@@ -76,6 +78,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
 
         this.inputHandler = new InputManager(user, background, this);
         this.actorManager = new ActorManager(root, friendlyUnits, enemyUnits, userProjectiles, enemyProjectiles);
+        this.collisionManager = new CollisionManager();
     }
 
     protected abstract void initializeFriendlyUnits();
@@ -137,9 +140,9 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
             generateEnemyFire();
             updateNumberOfEnemies();
             handleEnemyPenetration();
-            actorManager.handleCollisions(userProjectiles, enemyUnits);
-            actorManager.handleCollisions(enemyProjectiles, friendlyUnits);
-            actorManager.handleCollisions(friendlyUnits, enemyUnits);
+            collisionManager.handleCollisions(userProjectiles, enemyUnits);
+            collisionManager.handleCollisions(enemyProjectiles, friendlyUnits);
+            collisionManager.handleCollisions(friendlyUnits, enemyUnits);
             actorManager.removeAllDestroyedActors();
             updateKillCount();
             updateLevelView();
@@ -277,7 +280,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
         statusText.setLayoutX(x);
         statusText.setLayoutY(y);
     }
-
+    
     private void centerStatusText() {
         double centerX = (screenWidth / 2) - (statusText.getBoundsInLocal().getWidth() / 2);
         setStatusTextPosition(centerX, 20);
