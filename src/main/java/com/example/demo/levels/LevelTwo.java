@@ -97,6 +97,6 @@ public class LevelTwo extends LevelParent {
     @Override
     protected void updateStatusText() {
         int killsRemaining = KILLS_TO_ADVANCE - getUser().getNumberOfKills();
-        statusText.setText("Remaining enemies to advance the next level: " + killsRemaining);
+        updateStatusText("Remaining enemies to advance the next level: " + killsRemaining);
     }
 }

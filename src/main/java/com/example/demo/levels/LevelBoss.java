@@ -66,7 +66,7 @@ public class LevelBoss extends LevelParent {
         getRoot().getChildren().add(getUser());
         getRoot().getChildren().add(shieldImage);
     }
-
+    
     /**
      * Checks if the game is over by verifying if the user or the boss is destroyed.
      */
@@ -105,7 +105,7 @@ public class LevelBoss extends LevelParent {
      */
     @Override
     protected void updateStatusText() {
-        statusText.setText("Remaining boss health: " + boss.getHealth());
+        updateStatusText("Remaining boss health: " + boss.getHealth());
     }
 
     /**

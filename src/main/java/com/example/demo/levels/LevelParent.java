@@ -10,7 +10,9 @@ import com.example.demo.managers.ActorManager;
 import com.example.demo.managers.CollisionManager;
 import com.example.demo.managers.GameStateManager;
 import com.example.demo.managers.InputManager;
+import com.example.demo.managers.StatusManager;
 import com.example.demo.managers.TimelineManager;
+import com.example.demo.managers.BackgroundManager;
 import com.example.demo.ui.PauseScreen;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -18,7 +20,6 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public abstract class LevelParent implements InputManager.ProjectileFiredListener {
@@ -35,7 +36,6 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
     private final TimelineManager timelineManager;
     private final UserPlane user;
     private final Scene scene;
-    private final ImageView background;
 
     private final List<ActiveActorDestructible> friendlyUnits;
     private final List<ActiveActorDestructible> enemyUnits;
@@ -47,13 +47,14 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
 
     private final StringProperty levelProperty;
 
-    protected final Text statusText;
+    protected final StatusManager statusManager;
 
     public InputManager inputHandler;
 
     private final ActorManager actorManager;
     private final CollisionManager collisionManager;
     private final GameStateManager gameStateManager;
+    private final BackgroundManager backgroundManager;
 
     public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
         this.root = new Group();
@@ -65,17 +66,17 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
         this.userProjectiles = new ArrayList<>();
         this.enemyProjectiles = new ArrayList<>();
 
-        this.background = new ImageView(new Image(getClass().getResource(backgroundImageName).toExternalForm()));
         this.screenHeight = screenHeight;
         this.screenWidth = screenWidth;
         this.enemyMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
         this.levelView = instantiateLevelView();
         this.currentNumberOfEnemies = 0;
         this.levelProperty = new SimpleStringProperty();
-        this.statusText = new Text();
+        this.statusManager = new StatusManager(root, screenWidth);
         friendlyUnits.add(user);
 
-        this.inputHandler = new InputManager(user, background, this);
+        this.backgroundManager = new BackgroundManager(backgroundImageName, screenHeight, screenWidth);
+        this.inputHandler = new InputManager(user, backgroundManager.getBackground(), this);
         this.actorManager = new ActorManager(root, friendlyUnits, enemyUnits, userProjectiles, enemyProjectiles);
         this.collisionManager = new CollisionManager();
         this.gameStateManager = new GameStateManager(this, levelView);
@@ -85,18 +86,18 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
     protected abstract void checkIfGameOver();
     protected abstract void spawnEnemyUnits();
     protected abstract LevelView instantiateLevelView();
+    protected abstract void updateStatusText(); // Abstract method for subclasses to implement
 
     public Scene initializeScene() {
         initializeBackground();
         initializeFriendlyUnits();
         levelView.showHeartDisplay();
         addPauseButton();
-        initializeStatusText();
         return scene;
     }
 
     public void startGame() {
-        background.requestFocus();
+        backgroundManager.getBackground().requestFocus();
         timelineManager.start();
     }
 
@@ -112,7 +113,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
         if (isPaused) {
             timelineManager.resume();
             isPaused = false;
-            background.requestFocus();
+            backgroundManager.getBackground().requestFocus();
         }
     }
 
@@ -147,14 +148,12 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
             updateKillCount();
             updateLevelView();
             checkIfGameOver();
-            updateStatusText();
+            updateStatusText(); // Call the abstract method
         }
     }
 
     private void initializeBackground() {
-        background.setFitHeight(screenHeight);
-        background.setFitWidth(screenWidth);
-        root.getChildren().add(background);
+        backgroundManager.addToRoot(root);
     }
 
     private void generateEnemyFire() {
@@ -259,27 +258,12 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
         root.getChildren().add(pauseButton);
     }
 
-    private void initializeStatusText() {
-        statusText.setLayoutY(20);
-        statusText.setStyle("-fx-font-size: 20px; -fx-fill: black; -fx-font-family: 'Impact';");
-        root.getChildren().add(statusText);
-        centerStatusText();
-
-        statusText.textProperty().addListener((observable, oldValue, newValue) -> centerStatusText());
-    }
-
     protected void setStatusTextPosition(double x, double y) {
-        statusText.setLayoutX(x);
-        statusText.setLayoutY(y);
+        statusManager.setStatusTextPosition(x, y);
     }
 
-    private void centerStatusText() {
-        double centerX = (screenWidth / 2) - (statusText.getBoundsInLocal().getWidth() / 2);
-        setStatusTextPosition(centerX, 20);
-    }
-    
-    protected void updateStatusText() {
-        // This method will be overridden in subclasses to update the status text
+    protected void updateStatusText(String newText) {
+        statusManager.updateStatusText(newText);
     }
 
     @Override

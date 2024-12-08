@@ -7,6 +7,7 @@ import com.example.demo.actors.planes.EnemyPlane;
  * The LevelOne class represents the first level in the game.
  * It extends LevelParent and manages the spawning of enemy planes and game progression.
  */
+
 public class LevelOne extends LevelParent {
 
     // Path to the background image for the first level
@@ -97,6 +98,6 @@ public class LevelOne extends LevelParent {
     @Override
     protected void updateStatusText() {
         int killsRemaining = KILLS_TO_ADVANCE - getUser().getNumberOfKills();
-        statusText.setText("Remaining enemies to advance the next level: " + killsRemaining);
+        updateStatusText("Remaining enemies to advance the next level: " + killsRemaining);
     }
 }
