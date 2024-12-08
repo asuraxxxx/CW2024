@@ -4,15 +4,26 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import java.net.URL;
 
+/**
+ * The MusicController class manages the playback of background music in the game.
+ * It uses the singleton pattern to ensure only one instance of the controller exists.
+ */
 public class MusicController {
+    private static MusicController instance; // Singleton instance of MusicController
+    private MediaPlayer mediaPlayer; // MediaPlayer for playing music
+    private double volume = 0.5; // Default volume level
 
-    private static MusicController instance;
-    private MediaPlayer mediaPlayer;
-    private double volume = 0.5; // Default volume
-
+    /**
+     * Private constructor to prevent instantiation.
+     * Use getInstance() to get the singleton instance.
+     */
     private MusicController() {
     }
 
+    /**
+     * Returns the singleton instance of MusicController.
+     * @return The singleton instance.
+     */
     public static MusicController getInstance() {
         if (instance == null) {
             instance = new MusicController();
@@ -20,13 +31,18 @@ public class MusicController {
         return instance;
     }
 
+    /**
+     * Plays the specified music file.
+     * Stops any currently playing music before starting the new one.
+     * @param musicFile The path to the music file to be played.
+     */
     public void playMusic(String musicFile) {
         stopMusic(); // Stop any currently playing music
         URL resource = getClass().getResource(musicFile);
         if (resource != null) {
             Media media = new Media(resource.toString());
             mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Loop the music indefinitely
             mediaPlayer.setVolume(volume);
             mediaPlayer.play();
             System.out.println("Playing music: " + musicFile + " at volume: " + volume);
@@ -38,6 +54,9 @@ public class MusicController {
         }
     }
 
+    /**
+     * Stops the currently playing music.
+     */
     public void stopMusic() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
@@ -46,6 +65,10 @@ public class MusicController {
         }
     }
 
+    /**
+     * Sets the volume for the music playback.
+     * @param volume The volume level to be set (0.0 to 1.0).
+     */
     public void setVolume(double volume) {
         this.volume = volume;
         if (mediaPlayer != null) {
@@ -53,6 +76,10 @@ public class MusicController {
         }
     }
 
+    /**
+     * Gets the current volume level.
+     * @return The current volume level.
+     */
     public double getVolume() {
         return volume;
     }

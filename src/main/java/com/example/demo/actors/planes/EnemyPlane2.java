@@ -1,40 +1,32 @@
 package com.example.demo.actors.planes;
 
-import com.example.demo.actors.ActiveActorDestructible;
 import com.example.demo.actors.projectiles.EnemyProjectile;
+import com.example.demo.strategies.movement.HorizontalMovementStrategy;
 
+/**
+ * The EnemyPlane2 class represents another type of enemy plane in the game.
+ * It extends the FighterPlane class and includes specific movement and firing strategies.
+ */
 public class EnemyPlane2 extends FighterPlane {
 
-	private static final String IMAGE_NAME = "enemyplane2.png";
-	private static final int IMAGE_HEIGHT = 80;
-	private static final int HORIZONTAL_VELOCITY = -5;
-	private static final double PROJECTILE_X_POSITION_OFFSET = -100.0;
-	private static final double PROJECTILE_Y_POSITION_OFFSET = 50.0;
-	private static final int INITIAL_HEALTH = 1;
-	private static final double FIRE_RATE = .01;
+    /**
+     * Constructor for EnemyPlane2.
+     * Initializes the plane with specific attributes and sets its movement and firing strategies.
+     * @param initialXPos The initial X position of the plane.
+     * @param initialYPos The initial Y position of the plane.
+     */
+    public EnemyPlane2(double initialXPos, double initialYPos) {
+        super("enemyplane2.png", 80, initialXPos, initialYPos, 1);
+        setMovementStrategy(new HorizontalMovementStrategy(-5));
+        setFiringStrategy(() -> Math.random() < 0.01 ? new EnemyProjectile(getProjectileXPosition(-100.0), getProjectileYPosition(50.0)) : null);
+    }
 
-	public EnemyPlane2(double initialXPos, double initialYPos) {
-		super(IMAGE_NAME, IMAGE_HEIGHT, initialXPos, initialYPos, INITIAL_HEALTH);
-	}
-
-	@Override
-	public void updatePosition() {
-		moveHorizontally(HORIZONTAL_VELOCITY);
-	}
-
-	@Override
-	public ActiveActorDestructible fireProjectile() {
-		if (Math.random() < FIRE_RATE) {
-			double projectileXPosition = getProjectileXPosition(PROJECTILE_X_POSITION_OFFSET);
-			double projectileYPostion = getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET);
-			return new EnemyProjectile(projectileXPosition, projectileYPostion);
-		}
-		return null;
-	}
-
-	@Override
-	public void updateActor() {
-		updatePosition();
-	}
-
+    /**
+     * Updates the state of the EnemyPlane2.
+     * This includes updating its position.
+     */
+    @Override
+    public void updateActor() {
+        updatePosition();
+    }
 }

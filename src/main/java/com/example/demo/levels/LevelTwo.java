@@ -1,7 +1,9 @@
 package com.example.demo.levels;
 
-import com.example.demo.actors.ActiveActorDestructible;
 import com.example.demo.actors.planes.EnemyPlane2;
+import com.example.demo.managers.ActorManager;
+import com.example.demo.managers.GameStateManager;
+import com.example.demo.managers.StatusTextManager;
 
 public class LevelTwo extends LevelParent {
 
@@ -12,34 +14,33 @@ public class LevelTwo extends LevelParent {
     private static final double ENEMY_SPAWN_PROBABILITY = 0.20;
     private static final int PLAYER_INITIAL_HEALTH = 5;
 
+    private final GameStateManager gameStateManager;
+    private final ActorManager actorManager;
+    private final StatusTextManager statusTextManager;
+
     public LevelTwo(double screenHeight, double screenWidth) {
         super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
+        this.gameStateManager = new GameStateManager(this, instantiateLevelView());
+        this.actorManager = new ActorManager(getRoot(), getFriendlyUnits(), getEnemyUnits(), getUserProjectiles(), getEnemyProjectiles());
+        this.statusTextManager = new StatusTextManager(getRoot(), screenWidth);
     }
 
     @Override
     protected void checkIfGameOver() {
-        if (userIsDestroyed()) {
-            loseGame();
-        } else if (userHasReachedKillTarget()) {
-            goToNextLevel(NEXT_LEVEL);
-        }
+        gameStateManager.checkIfGameOver(userIsDestroyed(), userHasReachedKillTarget(), NEXT_LEVEL);
     }
 
     @Override
     protected void initializeFriendlyUnits() {
-        getRoot().getChildren().add(getUser());
+        actorManager.initializeFriendlyUnits(getUser());
     }
 
     @Override
     protected void spawnEnemyUnits() {
-        int currentNumberOfEnemies = getCurrentNumberOfEnemies();
-        for (int i = 0; i < TOTAL_ENEMIES - currentNumberOfEnemies; i++) {
-            if (Math.random() < ENEMY_SPAWN_PROBABILITY) {
-                double newEnemyInitialYPosition = 25 + Math.random() * getEnemyMaximumYPosition();
-                ActiveActorDestructible newEnemy = new EnemyPlane2(getScreenWidth(), newEnemyInitialYPosition);
-                addEnemyUnit(newEnemy);
-            }
-        }
+        actorManager.spawnEnemyUnits(TOTAL_ENEMIES, ENEMY_SPAWN_PROBABILITY, () -> {
+            double newEnemyInitialYPosition = 25 + Math.random() * getEnemyMaximumYPosition();
+            return new EnemyPlane2(getScreenWidth(), newEnemyInitialYPosition);
+        });
     }
 
     @Override
@@ -53,7 +54,7 @@ public class LevelTwo extends LevelParent {
 
     @Override
     protected void updateStatusText() {
-        int killsRemaining = KILLS_TO_ADVANCE - getUser().getNumberOfKills();
-        statusText.setText("Remaining enemies to advance the next level: " + killsRemaining);
+        int killsRemaining = Math.max(KILLS_TO_ADVANCE - getUser().getNumberOfKills(), 0);
+        statusTextManager.updateStatusText("Remaining enemies to advance to the next level: " + killsRemaining);
     }
 }

@@ -1,138 +1,108 @@
 package com.example.demo.actors.planes;
 
-import java.util.*;
-
-import com.example.demo.actors.ActiveActorDestructible;
+import com.example.demo.actors.ShieldActivation;
+import com.example.demo.strategies.movement.VerticalMovementStrategy;
 import com.example.demo.actors.projectiles.BossProjectile;
 import com.example.demo.ui.images.ShieldImage;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * The BossPlane class represents a powerful boss plane in the game.
+ * It extends the FighterPlane class and includes additional features
+ * such as a shield and a complex movement pattern.
+ */
 public class BossPlane extends FighterPlane {
+    private final ShieldActivation shield; // Shield activation for the BossPlane
+    private final List<Integer> movePattern; // List to store the movement pattern
+    private int indexOfCurrentMove; // Index to track the current move in the pattern
 
-    private static final String IMAGE_NAME = "bossplane.png";
-    private static final double INITIAL_X_POSITION = 1000.0;
-    private static final double INITIAL_Y_POSITION = 400;
-    private static final double PROJECTILE_Y_POSITION_OFFSET = 75.0;
-    private static final double BOSS_FIRE_RATE = .04;
-    private static final int IMAGE_HEIGHT = 300;
-    private static final int VERTICAL_VELOCITY = 8;
-    private static final int HEALTH = 10;
-    private static final int MOVE_FREQUENCY_PER_CYCLE = 5;
-    private static final int ZERO = 0;
-    private static final int MAX_FRAMES_WITH_SAME_MOVE = 10;
-    private static final int Y_POSITION_UPPER_BOUND = -100;
-    private static final int Y_POSITION_LOWER_BOUND = 475;
-    private static final int SHIELD_DURATION_FRAMES = 300; // 5 seconds at 60 FPS
-    private static final int SHIELD_COOLDOWN_FRAMES = 600; // 10 seconds cooldown
-    private final List<Integer> movePattern;
-    private boolean isShielded;
-    private int consecutiveMovesInSameDirection;
-    private int indexOfCurrentMove;
-    private int framesWithShieldActivated;
-    private int framesSinceLastShield;
-    private final ShieldImage shieldImage;
-
+    /**
+     * Constructor for BossPlane.
+     * Initializes the plane with specific attributes and activates the shield.
+     * @param shieldImage The image used for the shield.
+     */
     public BossPlane(ShieldImage shieldImage) {
-        super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, HEALTH);
-        this.shieldImage = shieldImage;
-        movePattern = new ArrayList<>();
-        consecutiveMovesInSameDirection = 0;
-        indexOfCurrentMove = 0;
-        framesWithShieldActivated = 0;
-        framesSinceLastShield = SHIELD_COOLDOWN_FRAMES; // Start with cooldown complete
-        isShielded = false;
+        super("bossplane.png", 300, 1000.0, 400, 10);
+        this.setLayoutY(200); // Set a higher initial position
+        this.shield = new ShieldActivation(shieldImage);
+        this.movePattern = new ArrayList<>();
         initializeMovePattern();
-        activateShield(); // Immediately activate the shield when the level starts
+        setMovementStrategy(new VerticalMovementStrategy(8));
+        setFiringStrategy(() -> Math.random() < 0.04 ? new BossProjectile(getProjectileInitialPosition()) : null);
+        shield.activateShield();
     }
 
-    @Override
-    public void updatePosition() {
-        double initialTranslateY = getTranslateY();
-        moveVertically(getNextMove());
-        double currentPosition = getLayoutY() + getTranslateY();
-        if (currentPosition < Y_POSITION_UPPER_BOUND || currentPosition > Y_POSITION_LOWER_BOUND) {
-            setTranslateY(initialTranslateY);
-        }
-    }
-
-    @Override
-    public void updateActor() {
-        updatePosition();
-        updateShield();
-    }
-
-    @Override
-    public ActiveActorDestructible fireProjectile() {
-        return bossFiresInCurrentFrame() ? new BossProjectile(getProjectileInitialPosition()) : null;
-    }
-
-    @Override
-    public void takeDamage() {
-        if (!shieldImage.isVisible()) {
-            super.takeDamage();
-        }
-    }
-
+    /**
+     * Initializes the movement pattern for the BossPlane.
+     * The pattern includes various speeds and directions.
+     */
     private void initializeMovePattern() {
-        for (int i = 0; i < MOVE_FREQUENCY_PER_CYCLE; i++) {
-            movePattern.add(VERTICAL_VELOCITY);
-            movePattern.add(-VERTICAL_VELOCITY);
-            movePattern.add(ZERO);
+        for (int i = 0; i < 10; i++) {
+            movePattern.add(16);  // Move down much faster
+            movePattern.add(-16); // Move up much faster
+            movePattern.add(8);  // Move down faster
+            movePattern.add(-8); // Move up faster
+            movePattern.add(8);   // Move down
+            movePattern.add(-8);  // Move up
+            movePattern.add(4);   // Move down smoothly
+            movePattern.add(-4);  // Move up smoothly
+            movePattern.add(0);   // Stay still
         }
         Collections.shuffle(movePattern);
     }
 
-    private void updateShield() {
-        if (isShielded) {
-            framesWithShieldActivated++;
-            System.out.println("Shield is active. Frames with shield: " + framesWithShieldActivated);
-            if (shieldExhausted()) {
-                deactivateShield();
-            }
-        } else {
-            framesSinceLastShield++;
-            if (framesSinceLastShield >= SHIELD_COOLDOWN_FRAMES) {
-                activateShield();
-            }
+    /**
+     * Updates the position of the BossPlane based on the current move pattern.
+     * Ensures the plane does not move out of the allowed vertical bounds.
+     */
+    @Override
+    public void updatePosition() {
+        int move = movePattern.get(indexOfCurrentMove);
+        setMovementStrategy(new VerticalMovementStrategy(move));
+        super.updatePosition();
+        indexOfCurrentMove = (indexOfCurrentMove + 1) % movePattern.size();
+        
+        // Ensure the plane doesn't get stuck at the bottom or top
+        double currentPosition = getLayoutY() + getTranslateY();
+        if (currentPosition > 475) {
+            setTranslateY(475 - getLayoutY());
+        } else if (currentPosition < 0) {
+            setTranslateY(-getLayoutY());
+        }
+        
+        // Debugging output
+        System.out.println("Current Position: " + currentPosition);
+    }
+
+    /**
+     * Updates the state of the BossPlane.
+     * This includes updating its position and the shield status.
+     */
+    @Override
+    public void updateActor() {
+        updatePosition();
+        shield.updateShield();
+    }
+
+    /**
+     * Handles the damage taken by the BossPlane.
+     * Damage is only taken if the shield is not active.
+     */
+    @Override
+    public void takeDamage() {
+        if (!shield.isShielded()) {
+            super.takeDamage();
         }
     }
 
-    private int getNextMove() {
-        int currentMove = movePattern.get(indexOfCurrentMove);
-        consecutiveMovesInSameDirection++;
-        if (consecutiveMovesInSameDirection == MAX_FRAMES_WITH_SAME_MOVE) {
-            Collections.shuffle(movePattern);
-            consecutiveMovesInSameDirection = 0;
-            indexOfCurrentMove++;
-        }
-        if (indexOfCurrentMove == movePattern.size()) {
-            indexOfCurrentMove = 0;
-        }
-        return currentMove;
-    }
-
-    private boolean bossFiresInCurrentFrame() {
-        return Math.random() < BOSS_FIRE_RATE;
-    }
-
+    /**
+     * Calculates the initial position for the projectiles fired by the BossPlane.
+     * @return The initial Y position for the projectiles.
+     */
     private double getProjectileInitialPosition() {
-        return getLayoutY() + getTranslateY() + PROJECTILE_Y_POSITION_OFFSET;
-    }
-
-    private boolean shieldExhausted() {
-        return framesWithShieldActivated >= SHIELD_DURATION_FRAMES;
-    }
-
-    private void activateShield() {
-        isShielded = true;
-        framesWithShieldActivated = 0;
-        shieldImage.showShield(); // Show the shield image
-        System.out.println("Shield activated");
-    }
-
-    private void deactivateShield() {
-        isShielded = false;
-        framesSinceLastShield = 0;
-        shieldImage.hideShield(); // Hide the shield image
-        System.out.println("Shield deactivated");
+        return getLayoutY() + getTranslateY() + 75.0;
     }
 }

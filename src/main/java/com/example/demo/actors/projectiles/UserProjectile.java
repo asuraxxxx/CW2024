@@ -1,49 +1,43 @@
 package com.example.demo.actors.projectiles;
 
-import java.net.URL;
-import javafx.scene.media.AudioClip;
+import com.example.demo.audio.ProjectileSoundController;
 
+/**
+ * The UserProjectile class represents a projectile fired by the user's plane in the game.
+ * It extends the Projectile class and includes specific attributes and behaviors.
+ */
 public class UserProjectile extends Projectile {
+    private static final String IMAGE_NAME = "userfire.png"; // Image file name for the projectile
+    private static final int IMAGE_HEIGHT = 125; // Height of the projectile image
+    private static final int HORIZONTAL_VELOCITY = 15; // Horizontal velocity of the projectile
+    private static final String SHOOTING_SOUND = "/com/example/demo/audios/shooteffect.mp3"; // Sound effect for shooting
 
-    private static final String IMAGE_NAME = "userfire.png";
-    private static final int IMAGE_HEIGHT = 125;
-    private static final int HORIZONTAL_VELOCITY = 15;
-    private static final String SHOOTING_SOUND = "/com/example/demo/audios/shooteffect.mp3";
-    private static AudioClip shootingSound;
-
-    static {
-        try {
-            URL soundURL = UserProjectile.class.getResource(SHOOTING_SOUND);
-            if (soundURL == null) {
-                System.err.println("Fail to load sound");
-            } else {
-                shootingSound = new AudioClip(soundURL.toExternalForm());
-                System.out.println("Success to load sound");
-            }
-        } catch (Exception e) {
-            System.err.println("Fail to load sound: " + e.getMessage());
-            shootingSound = null;
-        }
-    }
-
+    /**
+     * Constructor for UserProjectile.
+     * Initializes the projectile with specific attributes and plays the shooting sound.
+     * @param initialXPos The initial X position of the projectile.
+     * @param initialYPos The initial Y position of the projectile.
+     */
     public UserProjectile(double initialXPos, double initialYPos) {
         super(IMAGE_NAME, IMAGE_HEIGHT, initialXPos, initialYPos);
-        playSound();
+        ProjectileSoundController.playSound(SHOOTING_SOUND);
     }
 
+    /**
+     * Updates the position of the UserProjectile.
+     * Moves the projectile horizontally based on its velocity.
+     */
     @Override
     public void updatePosition() {
         moveHorizontally(HORIZONTAL_VELOCITY);
     }
 
+    /**
+     * Updates the state of the UserProjectile.
+     * This includes updating its position.
+     */
     @Override
     public void updateActor() {
         updatePosition();
-    }
-
-    private void playSound() {
-        if (shootingSound != null) {
-            shootingSound.play();
-        }
     }
 }
