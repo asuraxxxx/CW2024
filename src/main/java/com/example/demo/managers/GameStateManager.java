@@ -22,4 +22,12 @@ public class GameStateManager {
         levelParent.getTimelineManager().stop();
         levelView.showGameOverImage();
     }
+
+    public void checkIfGameOver(boolean userIsDestroyed, boolean userHasReachedKillTarget, String nextLevel) {
+        if (userIsDestroyed) {
+            loseGame();
+        } else if (userHasReachedKillTarget) {
+            levelParent.goToNextLevel(nextLevel);
+        }
+    }
 }

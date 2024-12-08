@@ -1,9 +1,11 @@
 package com.example.demo.managers;
 
 import com.example.demo.actors.ActiveActorDestructible;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.example.demo.actors.planes.UserPlane;
 import javafx.scene.Group;
+import java.util.List;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class ActorManager {
 
@@ -51,6 +53,20 @@ public class ActorManager {
                     actor.takeDamage();
                     otherActor.takeDamage();
                 }
+            }
+        }
+    }
+
+    public void initializeFriendlyUnits(UserPlane user) {
+        root.getChildren().add(user);
+    }
+
+    public void spawnEnemyUnits(int totalEnemies, double spawnProbability, Supplier<ActiveActorDestructible> enemySupplier) {
+        for (int i = 0; i < totalEnemies - enemyUnits.size(); i++) {
+            if (Math.random() < spawnProbability) {
+                ActiveActorDestructible newEnemy = enemySupplier.get();
+                enemyUnits.add(newEnemy);
+                root.getChildren().add(newEnemy);
             }
         }
     }

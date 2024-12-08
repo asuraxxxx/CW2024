@@ -214,6 +214,22 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
     protected boolean userIsDestroyed() {
         return user.isDestroyed();
     }
+    
+    protected List<ActiveActorDestructible> getFriendlyUnits() {
+        return friendlyUnits;
+    }
+
+    protected List<ActiveActorDestructible> getEnemyUnits() {
+        return enemyUnits;
+    }
+
+    protected List<ActiveActorDestructible> getUserProjectiles() {
+        return userProjectiles;
+    }
+
+    protected List<ActiveActorDestructible> getEnemyProjectiles() {
+        return enemyProjectiles;
+    }
 
     private void updateNumberOfEnemies() {
         currentNumberOfEnemies = enemyUnits.size();
