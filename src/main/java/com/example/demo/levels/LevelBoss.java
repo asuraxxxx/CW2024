@@ -105,7 +105,8 @@ public class LevelBoss extends LevelParent {
      */
     @Override
     protected void updateStatusText() {
-        updateStatusText("Remaining boss health: " + boss.getHealth());
+        int bossHealth = Math.max(boss.getHealth(), 0);
+        updateStatusText("Remaining boss health: " + bossHealth);
     }
 
     /**

@@ -4,15 +4,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import java.util.*;
 import com.example.demo.actors.ActiveActorDestructible;
-import com.example.demo.actors.planes.FighterPlane;
 import com.example.demo.actors.planes.UserPlane;
-import com.example.demo.managers.ActorManager;
-import com.example.demo.managers.CollisionManager;
-import com.example.demo.managers.GameStateManager;
-import com.example.demo.managers.InputManager;
-import com.example.demo.managers.StatusManager;
-import com.example.demo.managers.TimelineManager;
-import com.example.demo.managers.BackgroundManager;
+import com.example.demo.managers.*;
 import com.example.demo.ui.PauseScreen;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -47,7 +40,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
 
     private final StringProperty levelProperty;
 
-    protected final StatusManager statusManager;
+    protected final StatusTextManager statusManager;
 
     public InputManager inputHandler;
 
@@ -55,6 +48,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
     private final CollisionManager collisionManager;
     private final GameStateManager gameStateManager;
     private final BackgroundManager backgroundManager;
+    private final ProjectileManager projectileManager;
 
     public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
         this.root = new Group();
@@ -72,7 +66,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
         this.levelView = instantiateLevelView();
         this.currentNumberOfEnemies = 0;
         this.levelProperty = new SimpleStringProperty();
-        this.statusManager = new StatusManager(root, screenWidth);
+        this.statusManager = new StatusTextManager(root, screenWidth);
         friendlyUnits.add(user);
 
         this.backgroundManager = new BackgroundManager(backgroundImageName, screenHeight, screenWidth);
@@ -80,6 +74,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
         this.actorManager = new ActorManager(root, friendlyUnits, enemyUnits, userProjectiles, enemyProjectiles);
         this.collisionManager = new CollisionManager();
         this.gameStateManager = new GameStateManager(this, levelView);
+        this.projectileManager = new ProjectileManager(root, userProjectiles, enemyProjectiles);
     }
 
     protected abstract void initializeFriendlyUnits();
@@ -138,7 +133,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
         if (!isPaused) {
             spawnEnemyUnits();
             actorManager.updateActors();
-            generateEnemyFire();
+            projectileManager.generateEnemyFire(enemyUnits);
             updateNumberOfEnemies();
             handleEnemyPenetration();
             collisionManager.handleCollisions(userProjectiles, enemyUnits);
@@ -154,17 +149,6 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
 
     private void initializeBackground() {
         backgroundManager.addToRoot(root);
-    }
-
-    private void generateEnemyFire() {
-        enemyUnits.forEach(enemy -> spawnEnemyProjectile(((FighterPlane) enemy).fireProjectile()));
-    }
-
-    private void spawnEnemyProjectile(ActiveActorDestructible projectile) {
-        if (projectile != null) {
-            root.getChildren().add(projectile);
-            enemyProjectiles.add(projectile);
-        }
     }
 
     private void handleEnemyPenetration() {
@@ -268,10 +252,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
 
     @Override
     public void onProjectileFired(ActiveActorDestructible projectile) {
-        if (projectile != null) {
-            root.getChildren().add(projectile);
-            userProjectiles.add(projectile);
-        }
+        projectileManager.onProjectileFired(projectile);
     }
 
     public TimelineManager getTimelineManager() {

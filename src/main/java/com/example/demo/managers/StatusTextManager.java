@@ -3,12 +3,12 @@ package com.example.demo.managers;
 import javafx.scene.Group;
 import javafx.scene.text.Text;
 
-public class StatusManager {
+public class StatusTextManager {
     private final Text statusText;
     private final double screenWidth;
     private final Group root;
 
-    public StatusManager(Group root, double screenWidth) {
+    public StatusTextManager(Group root, double screenWidth) {
         this.statusText = new Text();
         this.screenWidth = screenWidth;
         this.root = root;
