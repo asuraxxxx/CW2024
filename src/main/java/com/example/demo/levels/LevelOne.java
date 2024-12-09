@@ -23,11 +23,16 @@ public class LevelOne extends LevelParent {
         this.gameStateManager = new GameStateManager(this, instantiateLevelView());
         this.actorManager = new ActorManager(getRoot(), getFriendlyUnits(), getEnemyUnits(), getUserProjectiles(), getEnemyProjectiles());
         this.statusTextManager = new StatusTextManager(getRoot(), screenWidth);
+        startTimer(); // Start the timer when the level begins
     }
 
     @Override
     protected void checkIfGameOver() {
-        gameStateManager.checkIfGameOver(userIsDestroyed(), userHasReachedKillTarget(), NEXT_LEVEL);
+        if (userIsDestroyed() || userHasReachedKillTarget()) {
+            stopTimer(); // Stop the timer when the level ends
+            storeLevelTime(1); // Store the time for level one
+            gameStateManager.checkIfGameOver(userIsDestroyed(), userHasReachedKillTarget(), NEXT_LEVEL);
+        }
     }
 
     @Override

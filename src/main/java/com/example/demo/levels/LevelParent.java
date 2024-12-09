@@ -1,12 +1,11 @@
 package com.example.demo.levels;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import java.util.*;
 import com.example.demo.actors.ActiveActorDestructible;
 import com.example.demo.actors.planes.UserPlane;
 import com.example.demo.managers.*;
 import com.example.demo.ui.PauseScreen;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,6 +13,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class LevelParent implements InputManager.ProjectileFiredListener {
 
@@ -49,6 +51,12 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
     private final GameStateManager gameStateManager;
     private final BackgroundManager backgroundManager;
     private final ProjectileManager projectileManager;
+
+    private long startTime;
+    private long elapsedTime;
+    private long levelOneTime;
+    private long levelTwoTime;
+    private long levelThreeTime;
 
     public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
         this.root = new Group();
@@ -94,6 +102,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
     public void startGame() {
         backgroundManager.getBackground().requestFocus();
         timelineManager.start();
+        startTimer(); // Start the timer when the game starts
     }
 
     public void pauseGame() {
@@ -101,6 +110,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
             timelineManager.pause();
             isPaused = true;
             showPauseScreen();
+            stopTimer(); // Stop the timer when the game is paused
         }
     }
 
@@ -109,6 +119,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
             timelineManager.resume();
             isPaused = false;
             backgroundManager.getBackground().requestFocus();
+            startTimer(); // Restart the timer when the game resumes
         }
     }
 
@@ -214,7 +225,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
     protected boolean userIsDestroyed() {
         return user.isDestroyed();
     }
-    
+
     protected List<ActiveActorDestructible> getFriendlyUnits() {
         return friendlyUnits;
     }
@@ -273,5 +284,31 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
 
     public TimelineManager getTimelineManager() {
         return timelineManager;
+    }
+
+    protected void startTimer() {
+        startTime = System.nanoTime();
+    }
+
+    protected void stopTimer() {
+        elapsedTime = System.nanoTime() - startTime;
+    }
+
+    protected void storeLevelTime(int level) {
+        switch (level) {
+            case 1:
+                levelOneTime = elapsedTime;
+                break;
+            case 2:
+                levelTwoTime = elapsedTime;
+                break;
+            case 3:
+                levelThreeTime = elapsedTime;
+                break;
+        }
+    }
+    
+    protected long getTotalTime() {
+        return levelOneTime + levelTwoTime + levelThreeTime;
     }
 }
