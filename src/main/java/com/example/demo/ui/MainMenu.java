@@ -2,7 +2,6 @@ package com.example.demo.ui;
 
 import com.example.demo.audio.MusicController;
 import com.example.demo.controller.GameController;
-
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -68,6 +67,13 @@ public class MainMenu {
         instructionsButton.setFont(Font.font("Impact", 20));
         instructionsButton.setOnAction(e -> showInstructions());
 
+        // Create and style the leaderboard button
+        Button leaderboardButton = new Button("Leaderboard");
+        leaderboardButton.setPrefWidth(200);
+        leaderboardButton.setPrefHeight(50);
+        leaderboardButton.setFont(Font.font("Impact", 20));
+        leaderboardButton.setOnAction(e -> showLeaderboard());
+
         // Create and style the exit button
         Button exitButton = new Button("Exit");
         exitButton.setPrefWidth(200);
@@ -76,7 +82,7 @@ public class MainMenu {
         exitButton.setOnAction(e -> exitGame());
 
         // Add all buttons to the menu layout
-        menuLayout.getChildren().addAll(title, startButton, instructionsButton, exitButton);
+        menuLayout.getChildren().addAll(title, startButton, instructionsButton, leaderboardButton, exitButton);
 
         // Load and set the background image
         Image backgroundImage = new Image(getClass().getResource("/com/example/demo/images/background1.jpg").toExternalForm());
@@ -117,6 +123,14 @@ public class MainMenu {
     private void showInstructions() {
         PauseScreen pauseScreen = new PauseScreen(primaryStage, null, null);
         pauseScreen.showInstructions();
+    }
+
+    /**
+     * Displays the leaderboard screen.
+     */
+    private void showLeaderboard() {
+        LeaderboardScreen leaderboardScreen = new LeaderboardScreen(primaryStage);
+        leaderboardScreen.show();
     }
 
     /**

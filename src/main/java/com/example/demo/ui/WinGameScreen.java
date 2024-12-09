@@ -25,6 +25,7 @@ public class WinGameScreen {
         this.totalTime = totalTime;
         this.restartLevelButton = createImageButton("/com/example/demo/images/restartbutton.jpg");
         this.returnToMainMenuButton = createImageButton("/com/example/demo/images/exitbutton.jpg");
+        LeaderboardScreen.addTime(totalTime); // Store the total time in the leaderboard
     }
 
     private Button createImageButton(String imagePath) {
