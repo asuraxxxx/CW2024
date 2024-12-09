@@ -51,7 +51,8 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
     private final GameStateManager gameStateManager;
     private final BackgroundManager backgroundManager;
     private final ProjectileManager projectileManager;
-    private final TimerManager timerManager; // Add TimerManager instance
+    private final TimerManager timerManager;
+    private final EnemyManager enemyManager; // Add EnemyManager instance
 
     public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
         this.root = new Group();
@@ -78,7 +79,8 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
         this.collisionManager = new CollisionManager();
         this.gameStateManager = new GameStateManager(this, levelView);
         this.projectileManager = new ProjectileManager(root, userProjectiles, enemyProjectiles);
-        this.timerManager = new TimerManager(); // Initialize TimerManager
+        this.timerManager = new TimerManager();
+        this.enemyManager = new EnemyManager(root, enemyUnits, screenWidth, enemyMaximumYPosition); // Initialize EnemyManager
     }
 
     protected abstract void initializeFriendlyUnits();
@@ -142,7 +144,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
             actorManager.updateActors();
             projectileManager.generateEnemyFire(enemyUnits);
             updateNumberOfEnemies();
-            handleEnemyPenetration();
+            enemyManager.handleEnemyPenetration();
             collisionManager.handleCollisions(userProjectiles, enemyUnits);
             collisionManager.handleCollisions(enemyProjectiles, friendlyUnits);
             collisionManager.handleCollisions(friendlyUnits, enemyUnits);
@@ -158,15 +160,6 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
         backgroundManager.addToRoot(root);
     }
 
-    private void handleEnemyPenetration() {
-        for (ActiveActorDestructible enemy : enemyUnits) {
-            if (enemyHasPenetratedDefenses(enemy)) {
-                user.takeDamage();
-                enemy.destroy();
-            }
-        }
-    }
-
     private void updateLevelView() {
         levelView.removeHearts(user.getHealth());
     }
@@ -175,10 +168,6 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
         for (int i = 0; i < currentNumberOfEnemies - enemyUnits.size(); i++) {
             user.incrementKillCount();
         }
-    }
-
-    private boolean enemyHasPenetratedDefenses(ActiveActorDestructible enemy) {
-        return Math.abs(enemy.getTranslateX()) > screenWidth;
     }
 
     protected void winGame() {
@@ -272,7 +261,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
     protected void updateStatusText(String newText) {
         statusManager.updateStatusText(newText);
     }
-    
+
     @Override
     public void onProjectileFired(ActiveActorDestructible projectile) {
         projectileManager.onProjectileFired(projectile);
@@ -282,7 +271,11 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
         return timelineManager;
     }
 
-    public TimerManager getTimerManager() { // Add getter for TimerManager
+    public TimerManager getTimerManager() {
         return timerManager;
+    }
+
+    public EnemyManager getEnemyManager() {
+        return enemyManager;
     }
 }
