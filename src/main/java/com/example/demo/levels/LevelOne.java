@@ -4,6 +4,7 @@ import com.example.demo.actors.planes.EnemyPlane;
 import com.example.demo.managers.ActorManager;
 import com.example.demo.managers.GameStateManager;
 import com.example.demo.managers.StatusTextManager;
+import com.example.demo.actors.ActiveActorDestructible;
 
 public class LevelOne extends LevelParent {
 
@@ -61,5 +62,10 @@ public class LevelOne extends LevelParent {
     protected void updateStatusText() {
         int killsRemaining = Math.max(KILLS_TO_ADVANCE - getUser().getNumberOfKills(), 0);
         statusTextManager.updateStatusText("Remaining enemies to advance to the next level: " + killsRemaining);
+    }
+
+    @Override
+    public void onProjectileFired(ActiveActorDestructible projectile) {
+        getProjectileManager().onProjectileFired(projectile);
     }
 }

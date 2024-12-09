@@ -3,17 +3,10 @@ package com.example.demo.levels;
 import com.example.demo.actors.ActiveActorDestructible;
 import com.example.demo.actors.planes.UserPlane;
 import com.example.demo.managers.*;
-import com.example.demo.ui.PauseScreen;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +17,6 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
     private final double screenHeight;
     private final double screenWidth;
     private final double enemyMaximumYPosition;
-
-    private boolean isPaused = false;
 
     private final Group root;
     private final TimelineManager timelineManager;
@@ -52,7 +43,8 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
     private final BackgroundManager backgroundManager;
     private final ProjectileManager projectileManager;
     private final TimerManager timerManager;
-    private final EnemyManager enemyManager; // Add EnemyManager instance
+    private final EnemyManager enemyManager;
+    private final PauseManager pauseManager; // Add PauseManager instance
 
     public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
         this.root = new Group();
@@ -80,54 +72,28 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
         this.gameStateManager = new GameStateManager(this, levelView);
         this.projectileManager = new ProjectileManager(root, userProjectiles, enemyProjectiles);
         this.timerManager = new TimerManager();
-        this.enemyManager = new EnemyManager(root, enemyUnits, screenWidth, enemyMaximumYPosition); // Initialize EnemyManager
+        this.enemyManager = new EnemyManager(root, enemyUnits, screenWidth, enemyMaximumYPosition);
+        this.pauseManager = new PauseManager(this, root); // Initialize PauseManager
     }
 
     protected abstract void initializeFriendlyUnits();
     protected abstract void checkIfGameOver();
     protected abstract void spawnEnemyUnits();
     protected abstract LevelView instantiateLevelView();
-    protected abstract void updateStatusText(); // Abstract method for subclasses to implement
+    protected abstract void updateStatusText();
 
     public Scene initializeScene() {
         initializeBackground();
         initializeFriendlyUnits();
         levelView.showHeartDisplay();
-        addPauseButton();
+        pauseManager.addPauseButton(screenWidth); // Use PauseManager to add pause button
         return scene;
     }
 
     public void startGame() {
         backgroundManager.getBackground().requestFocus();
         timelineManager.start();
-        timerManager.startTimer(); // Start the timer when the game starts
-    }
-
-    public void pauseGame() {
-        if (!isPaused) {
-            timelineManager.pause();
-            isPaused = true;
-            showPauseScreen();
-            timerManager.stopTimer(); // Stop the timer when the game is paused
-        }
-    }
-
-    public void resumeGame() {
-        if (isPaused) {
-            timelineManager.resume();
-            isPaused = false;
-            backgroundManager.getBackground().requestFocus();
-            timerManager.startTimer(); // Restart the timer when the game resumes
-        }
-    }
-
-    private void showPauseScreen() {
-        PauseScreen pauseScreen = new PauseScreen((Stage) scene.getWindow(), this::resumeGame, this::showSettings);
-        pauseScreen.show();
-    }
-
-    private void showSettings() {
-        // Implement settings logic here
+        timerManager.startTimer();
     }
 
     public void goToNextLevel(String levelName) {
@@ -139,7 +105,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
     }
 
     private void updateScene() {
-        if (!isPaused) {
+        if (!pauseManager.isPaused()) { // Check pause state from PauseManager
             spawnEnemyUnits();
             actorManager.updateActors();
             projectileManager.generateEnemyFire(enemyUnits);
@@ -152,7 +118,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
             updateKillCount();
             updateLevelView();
             checkIfGameOver();
-            updateStatusText(); // Call the abstract method
+            updateStatusText();
         }
     }
 
@@ -231,42 +197,6 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
         currentNumberOfEnemies = enemyUnits.size();
     }
 
-    public void removePauseMenu(VBox pauseMenu) {
-        root.getChildren().remove(pauseMenu);
-    }
-
-    public void addPauseMenu(VBox pauseMenu) {
-        root.getChildren().add(pauseMenu);
-    }
-
-    private void addPauseButton() {
-        Image pauseImage = new Image(getClass().getResource("/com/example/demo/images/pausescreenbutton.png").toExternalForm());
-        ImageView pauseImageView = new ImageView(pauseImage);
-        pauseImageView.setFitWidth(50);
-        pauseImageView.setFitHeight(50);
-
-        Button pauseButton = new Button();
-        pauseButton.setGraphic(pauseImageView);
-        pauseButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
-        pauseButton.setLayoutX(screenWidth - 100);
-        pauseButton.setLayoutY(20);
-        pauseButton.setOnAction(e -> pauseGame());
-        root.getChildren().add(pauseButton);
-    }
-
-    protected void setStatusTextPosition(double x, double y) {
-        statusManager.setStatusTextPosition(x, y);
-    }
-
-    protected void updateStatusText(String newText) {
-        statusManager.updateStatusText(newText);
-    }
-
-    @Override
-    public void onProjectileFired(ActiveActorDestructible projectile) {
-        projectileManager.onProjectileFired(projectile);
-    }
-
     public TimelineManager getTimelineManager() {
         return timelineManager;
     }
@@ -277,5 +207,17 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
 
     public EnemyManager getEnemyManager() {
         return enemyManager;
+    }
+
+    public BackgroundManager getBackgroundManager() {
+        return backgroundManager;
+    }
+
+    public Scene getScene() {
+        return scene;
+    }
+
+    public ProjectileManager getProjectileManager() {
+        return projectileManager;
     }
 }

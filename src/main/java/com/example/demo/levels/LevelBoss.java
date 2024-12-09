@@ -4,6 +4,7 @@ import com.example.demo.actors.planes.BossPlane;
 import com.example.demo.ui.images.ShieldImage;
 import com.example.demo.ui.WinGameScreen;
 import javafx.stage.Stage;
+import com.example.demo.actors.ActiveActorDestructible;
 
 public class LevelBoss extends LevelParent {
 
@@ -83,5 +84,10 @@ public class LevelBoss extends LevelParent {
         Stage stage = (Stage) getRoot().getScene().getWindow();
         WinGameScreen winGameScreen = new WinGameScreen(stage, getTimerManager().getTotalTime());
         winGameScreen.show();
+    }
+
+    @Override
+    public void onProjectileFired(ActiveActorDestructible projectile) {
+        getProjectileManager().onProjectileFired(projectile);
     }
 }
