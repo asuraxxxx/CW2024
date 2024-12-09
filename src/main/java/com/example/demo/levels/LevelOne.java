@@ -1,6 +1,7 @@
 package com.example.demo.levels;
 
 import com.example.demo.actors.planes.EnemyPlane;
+import com.example.demo.factories.LevelViewFactory;
 import com.example.demo.managers.ActorManager;
 import com.example.demo.managers.GameStateManager;
 import com.example.demo.managers.StatusTextManager;
@@ -51,7 +52,7 @@ public class LevelOne extends LevelParent {
 
     @Override
     protected LevelView instantiateLevelView() {
-        return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
+        return LevelViewFactory.createLevelView("LevelOneView", getRoot(), PLAYER_INITIAL_HEALTH);
     }
 
     private boolean userHasReachedKillTarget() {

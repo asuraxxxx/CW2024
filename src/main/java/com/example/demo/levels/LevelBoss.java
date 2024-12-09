@@ -1,6 +1,7 @@
 package com.example.demo.levels;
 
 import com.example.demo.actors.planes.BossPlane;
+import com.example.demo.factories.LevelViewFactory;
 import com.example.demo.ui.images.ShieldImage;
 import com.example.demo.ui.WinGameScreen;
 import javafx.stage.Stage;
@@ -13,7 +14,6 @@ public class LevelBoss extends LevelParent {
 
     private final BossPlane boss;
     private final ShieldImage shieldImage;
-    private LevelBossView levelView;
 
     public LevelBoss(double screenHeight, double screenWidth) {
         super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
@@ -68,8 +68,7 @@ public class LevelBoss extends LevelParent {
 
     @Override
     protected LevelBossView instantiateLevelView() {
-        levelView = new LevelBossView(getRoot(), PLAYER_INITIAL_HEALTH);
-        return levelView;
+        return (LevelBossView) LevelViewFactory.createLevelView("LevelBossView", getRoot(), PLAYER_INITIAL_HEALTH);
     }
 
     @Override
