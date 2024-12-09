@@ -51,12 +51,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
     private final GameStateManager gameStateManager;
     private final BackgroundManager backgroundManager;
     private final ProjectileManager projectileManager;
-
-    private long startTime;
-    private long elapsedTime;
-    private long levelOneTime;
-    private long levelTwoTime;
-    private long levelThreeTime;
+    private final TimerManager timerManager; // Add TimerManager instance
 
     public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
         this.root = new Group();
@@ -83,6 +78,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
         this.collisionManager = new CollisionManager();
         this.gameStateManager = new GameStateManager(this, levelView);
         this.projectileManager = new ProjectileManager(root, userProjectiles, enemyProjectiles);
+        this.timerManager = new TimerManager(); // Initialize TimerManager
     }
 
     protected abstract void initializeFriendlyUnits();
@@ -102,7 +98,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
     public void startGame() {
         backgroundManager.getBackground().requestFocus();
         timelineManager.start();
-        startTimer(); // Start the timer when the game starts
+        timerManager.startTimer(); // Start the timer when the game starts
     }
 
     public void pauseGame() {
@@ -110,7 +106,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
             timelineManager.pause();
             isPaused = true;
             showPauseScreen();
-            stopTimer(); // Stop the timer when the game is paused
+            timerManager.stopTimer(); // Stop the timer when the game is paused
         }
     }
 
@@ -119,7 +115,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
             timelineManager.resume();
             isPaused = false;
             backgroundManager.getBackground().requestFocus();
-            startTimer(); // Restart the timer when the game resumes
+            timerManager.startTimer(); // Restart the timer when the game resumes
         }
     }
 
@@ -276,7 +272,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
     protected void updateStatusText(String newText) {
         statusManager.updateStatusText(newText);
     }
-
+    
     @Override
     public void onProjectileFired(ActiveActorDestructible projectile) {
         projectileManager.onProjectileFired(projectile);
@@ -286,29 +282,7 @@ public abstract class LevelParent implements InputManager.ProjectileFiredListene
         return timelineManager;
     }
 
-    protected void startTimer() {
-        startTime = System.nanoTime();
-    }
-
-    protected void stopTimer() {
-        elapsedTime = System.nanoTime() - startTime;
-    }
-
-    protected void storeLevelTime(int level) {
-        switch (level) {
-            case 1:
-                levelOneTime = elapsedTime;
-                break;
-            case 2:
-                levelTwoTime = elapsedTime;
-                break;
-            case 3:
-                levelThreeTime = elapsedTime;
-                break;
-        }
-    }
-    
-    protected long getTotalTime() {
-        return levelOneTime + levelTwoTime + levelThreeTime;
+    public TimerManager getTimerManager() { // Add getter for TimerManager
+        return timerManager;
     }
 }

@@ -37,7 +37,7 @@ public class LevelBoss extends LevelParent {
             .add(yOffset)
         );
 
-        startTimer(); // Start the timer when the level begins
+        getTimerManager().startTimer(); // Start the timer when the level begins
     }
 
     @Override
@@ -49,11 +49,11 @@ public class LevelBoss extends LevelParent {
     @Override
     protected void checkIfGameOver() {
         if (userIsDestroyed()) {
-            stopTimer(); // Stop the timer when the level ends
+            getTimerManager().stopTimer(); // Stop the timer when the level ends
             loseGame();
         } else if (boss.isDestroyed()) {
-            stopTimer(); // Stop the timer when the level ends
-            storeLevelTime(3); // Store the time for level three
+            getTimerManager().stopTimer(); // Stop the timer when the level ends
+            getTimerManager().storeLevelTime(3); // Store the time for level three
             winGame();
         }
     }
@@ -81,7 +81,7 @@ public class LevelBoss extends LevelParent {
     protected void winGame() {
         getTimelineManager().stop();
         Stage stage = (Stage) getRoot().getScene().getWindow();
-        WinGameScreen winGameScreen = new WinGameScreen(stage, getTotalTime());
+        WinGameScreen winGameScreen = new WinGameScreen(stage, getTimerManager().getTotalTime());
         winGameScreen.show();
     }
 }
