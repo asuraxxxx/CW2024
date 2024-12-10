@@ -1,9 +1,11 @@
 package com.example.demo.levels;
 
 import com.example.demo.actors.planes.EnemyPlane;
+import com.example.demo.factories.LevelViewFactory;
 import com.example.demo.managers.ActorManager;
 import com.example.demo.managers.GameStateManager;
 import com.example.demo.managers.StatusTextManager;
+import com.example.demo.actors.ActiveActorDestructible;
 
 public class LevelOne extends LevelParent {
 
@@ -23,11 +25,16 @@ public class LevelOne extends LevelParent {
         this.gameStateManager = new GameStateManager(this, instantiateLevelView());
         this.actorManager = new ActorManager(getRoot(), getFriendlyUnits(), getEnemyUnits(), getUserProjectiles(), getEnemyProjectiles());
         this.statusTextManager = new StatusTextManager(getRoot(), screenWidth);
+        getTimerManager().startTimer(); // Start the timer when the level begins
     }
 
     @Override
     protected void checkIfGameOver() {
-        gameStateManager.checkIfGameOver(userIsDestroyed(), userHasReachedKillTarget(), NEXT_LEVEL);
+        if (userIsDestroyed() || userHasReachedKillTarget()) {
+            getTimerManager().stopTimer(); // Stop the timer when the level ends
+            getTimerManager().storeLevelTime(1); // Store the time for level one
+            gameStateManager.checkIfGameOver(userIsDestroyed(), userHasReachedKillTarget(), NEXT_LEVEL);
+        }
     }
 
     @Override
@@ -45,7 +52,7 @@ public class LevelOne extends LevelParent {
 
     @Override
     protected LevelView instantiateLevelView() {
-        return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
+        return LevelViewFactory.createLevelView("LevelOneView", getRoot(), PLAYER_INITIAL_HEALTH);
     }
 
     private boolean userHasReachedKillTarget() {
@@ -56,5 +63,10 @@ public class LevelOne extends LevelParent {
     protected void updateStatusText() {
         int killsRemaining = Math.max(KILLS_TO_ADVANCE - getUser().getNumberOfKills(), 0);
         statusTextManager.updateStatusText("Remaining enemies to advance to the next level: " + killsRemaining);
+    }
+
+    @Override
+    public void onProjectileFired(ActiveActorDestructible projectile) {
+        getProjectileManager().onProjectileFired(projectile);
     }
 }

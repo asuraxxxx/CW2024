@@ -13,41 +13,24 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.text.Font;
 
-/**
- * The PauseScreen class creates a pause menu interface for the game,
- * allowing the player to resume, access settings, or return to the main menu.
- */
 public class PauseScreen {
 
-    // The primary stage of the application
     private final Stage stage;
     
-    // Actions to be performed when resume or settings buttons are clicked
     private final Runnable resume;
     private final Runnable settings;
 
-    /**
-     * Constructor for PauseScreen.
-     * 
-     * @param stage The primary stage of the application.
-     * @param resumeAction The action to perform when the resume button is clicked.
-     * @param settingsAction The action to perform when the settings button is clicked.
-     */
     public PauseScreen(Stage stage, Runnable resumeAction, Runnable settingsAction) {
         this.stage = stage;
         this.resume = resumeAction;
         this.settings = settingsAction;
     }
 
-    /**
-     * Displays the pause screen.
-     */
     public void show() {
         Stage pauseStage = new Stage();
         pauseStage.initModality(Modality.APPLICATION_MODAL);
         pauseStage.initStyle(StageStyle.TRANSPARENT);
 
-        // Set up the root layout with a background image
         BorderPane rootLayout = new BorderPane();
         BackgroundImage backgroundImage = new BackgroundImage(
             new Image(this.getClass().getResource("/com/example/demo/images/pausescreen.png").toExternalForm()),
@@ -57,12 +40,10 @@ public class PauseScreen {
             new BackgroundSize(1.0, 1.0, true, true, false, false)
         );
         rootLayout.setBackground(new Background(backgroundImage));
-
-        // Create a vertical box layout for the buttons and title
+        
         VBox layout = new VBox(20);
         layout.setAlignment(Pos.CENTER);
 
-        // Load and set the font for the title
         Font titleFont = null;
         try {
             titleFont = Font.loadFont(this.getClass().getResource("/com/example/demo/fonts/impact.ttf").toExternalForm(), 40);
@@ -70,14 +51,12 @@ public class PauseScreen {
             System.err.println("Error loading font: " + e.getMessage());
         }
 
-        // Create and style the title label
         Label titleLabel = new Label("Game Paused!");
         if (titleFont != null) {
             titleLabel.setFont(titleFont);
         }
         titleLabel.setStyle("-fx-text-fill: white;");
 
-        // Create and style the resume button
         Image resumeImage = new Image(getClass().getResource("/com/example/demo/images/resumebutton.jpg").toExternalForm());
         ImageView resumeImageView = new ImageView(resumeImage);
         resumeImageView.setFitWidth(30);
@@ -92,7 +71,6 @@ public class PauseScreen {
             pauseStage.close();
         });
 
-        // Create and style the settings button
         Image settingsImage = new Image(getClass().getResource("/com/example/demo/images/settingbutton.jpg").toExternalForm());
         ImageView settingsImageView = new ImageView(settingsImage);
         settingsImageView.setFitWidth(30);
@@ -107,7 +85,6 @@ public class PauseScreen {
             }
         });
 
-        // Create and style the main menu button
         Image mainMenuImage = new Image(getClass().getResource("/com/example/demo/images/exitbutton.jpg").toExternalForm());
         ImageView mainMenuImageView = new ImageView(mainMenuImage);
         mainMenuImageView.setFitWidth(30);
@@ -121,11 +98,9 @@ public class PauseScreen {
             pauseStage.close();
         });
 
-        // Add the title and buttons to the layout
         layout.getChildren().addAll(titleLabel, resumeButton, settingsButton, mainMenuButton);
         rootLayout.setCenter(layout);
 
-        // Create and display the scene
         Scene pauseScene = new Scene(rootLayout, 500, 350);
         pauseScene.setFill(null);
         pauseStage.setScene(pauseScene);
@@ -137,7 +112,6 @@ public class PauseScreen {
         settingsStage.initModality(Modality.APPLICATION_MODAL);
         settingsStage.initStyle(StageStyle.TRANSPARENT);
 
-        // Set up the root layout with a background image
         BorderPane rootLayout = new BorderPane();
         BackgroundImage backgroundImage = new BackgroundImage(
             new Image(this.getClass().getResource("/com/example/demo/images/pausescreen.png").toExternalForm()),
@@ -148,12 +122,10 @@ public class PauseScreen {
         );
         rootLayout.setBackground(new Background(backgroundImage));
 
-        // Create a vertical box layout for the settings
         VBox layout = new VBox(20);
         layout.setPadding(new Insets(20));
         layout.setAlignment(Pos.TOP_CENTER);
 
-        // Load and set the font for the settings label
         Font buttonFont = null;
         try {
             buttonFont = Font.loadFont(this.getClass().getResource("/com/example/demo/fonts/impact.ttf").toExternalForm(), 20);
@@ -161,7 +133,6 @@ public class PauseScreen {
             System.err.println("Error loading font: " + e.getMessage());
         }
 
-        // Create and style the settings label
         Label settingsLabel = new Label("Settings");
         if (buttonFont != null) {
             settingsLabel.setFont(buttonFont);
@@ -169,7 +140,6 @@ public class PauseScreen {
         settingsLabel.setStyle("-fx-text-fill: white;");
         layout.getChildren().add(settingsLabel);
 
-        // Create and style the instruction button
         Button instructionButton = new Button();
         instructionButton.setPrefWidth(45);
         instructionButton.setPrefHeight(45);
@@ -177,13 +147,12 @@ public class PauseScreen {
             instructionButton.setFont(buttonFont);
         }
         ImageView instructionImageView = new ImageView(new Image(this.getClass().getResource("/com/example/demo/images/instructionbutton.jpg").toExternalForm()));
-        instructionImageView.setFitWidth(45); // Set desired width
-        instructionImageView.setFitHeight(45); // Set desired height
+        instructionImageView.setFitWidth(45); 
+        instructionImageView.setFitHeight(45); 
         instructionButton.setGraphic(instructionImageView);
         instructionButton.setOnAction(event -> showInstructions());
         layout.getChildren().add(instructionButton);
 
-        // Create and style the close button
         Button closeButton = new Button();
         closeButton.setPrefWidth(30);
         closeButton.setPrefHeight(30);
@@ -191,15 +160,14 @@ public class PauseScreen {
             closeButton.setFont(buttonFont);
         }
         ImageView closeImageView = new ImageView(new Image(this.getClass().getResource("/com/example/demo/images/closebutton.jpg").toExternalForm()));
-        closeImageView.setFitWidth(30); // Set desired width
-        closeImageView.setFitHeight(30); // Set desired height
+        closeImageView.setFitWidth(30); 
+        closeImageView.setFitHeight(30); 
         closeButton.setGraphic(closeImageView);
         closeButton.setOnAction(event -> settingsStage.close());
         layout.getChildren().add(closeButton);
 
         rootLayout.setCenter(layout);
 
-        // Create and display the settings scene
         Scene settingsScene = new Scene(rootLayout, 400, 300);
         settingsScene.setFill(null);
         settingsStage.setScene(settingsScene);
@@ -211,7 +179,6 @@ public class PauseScreen {
         instructionsStage.initModality(Modality.APPLICATION_MODAL);
         instructionsStage.initStyle(StageStyle.TRANSPARENT);
 
-        // Set up the root layout with a background image
         BorderPane rootLayout = new BorderPane();
         BackgroundImage backgroundImage = new BackgroundImage(
             new Image(this.getClass().getResource("/com/example/demo/images/pausescreen.png").toExternalForm()),
@@ -222,12 +189,10 @@ public class PauseScreen {
         );
         rootLayout.setBackground(new Background(backgroundImage));
 
-        // Create a vertical box layout for the instructions
         VBox layout = new VBox(20);
         layout.setPadding(new Insets(20));
         layout.setAlignment(Pos.TOP_CENTER);
 
-        // Load and set the font for the instructions label
         Font buttonFont = null;
         try {
             buttonFont = Font.loadFont(this.getClass().getResource("/com/example/demo/fonts/impact.ttf").toExternalForm(), 20);
@@ -235,7 +200,6 @@ public class PauseScreen {
             System.err.println("Error loading font: " + e.getMessage());
         }
 
-        // Create and style the instructions label
         Label instructionsLabel = new Label("How to Play");
         if (buttonFont != null) {
             instructionsLabel.setFont(buttonFont);
@@ -243,7 +207,6 @@ public class PauseScreen {
         instructionsLabel.setStyle("-fx-text-fill: white;");
         layout.getChildren().add(instructionsLabel);
 
-        // Create and style the instruction steps
         Label step1 = new Label("1. Use arrow keys to move.");
         step1.setStyle("-fx-text-fill: white;");
         Label step2 = new Label("2. Press space key to shoot.");
@@ -254,7 +217,6 @@ public class PauseScreen {
         step4.setStyle("-fx-text-fill: white;");
         layout.getChildren().addAll(step1, step2, step3, step4);
 
-        // Create and style the close button
         Button closeButton = new Button();
         closeButton.setPrefWidth(30);
         closeButton.setPrefHeight(30);
@@ -262,15 +224,14 @@ public class PauseScreen {
             closeButton.setFont(buttonFont);
         }
         ImageView closeImageView = new ImageView(new Image(this.getClass().getResource("/com/example/demo/images/closebutton.jpg").toExternalForm()));
-        closeImageView.setFitWidth(30); // Set desired width
-        closeImageView.setFitHeight(30); // Set desired height
+        closeImageView.setFitWidth(30); 
+        closeImageView.setFitHeight(30); 
         closeButton.setGraphic(closeImageView);
         closeButton.setOnAction(event -> instructionsStage.close());
         layout.getChildren().add(closeButton);
 
         rootLayout.setCenter(layout);
 
-        // Create and display the instructions scene
         Scene instructionsScene = new Scene(rootLayout, 400, 300);
         instructionsScene.setFill(null);
         instructionsStage.setScene(instructionsScene);

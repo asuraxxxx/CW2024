@@ -1,47 +1,29 @@
 package com.example.demo.levels;
 
 import com.example.demo.actors.planes.BossPlane;
+import com.example.demo.factories.LevelViewFactory;
 import com.example.demo.ui.images.ShieldImage;
 import com.example.demo.ui.WinGameScreen;
 import javafx.stage.Stage;
+import com.example.demo.actors.ActiveActorDestructible;
 
-/**
- * The LevelBoss class represents the boss level in the game.
- * It extends LevelParent and manages the boss plane and its shield.
- */
 public class LevelBoss extends LevelParent {
 
-    // Path to the background image for the boss level
     private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background2.jpg";
-    
-    // Initial health of the player
     private static final int PLAYER_INITIAL_HEALTH = 5;
-    
-    // Boss plane and its shield image
+
     private final BossPlane boss;
     private final ShieldImage shieldImage;
-    
-    // View for the boss level
-    private LevelBossView levelView;
 
-    /**
-     * Constructor for LevelBoss.
-     * 
-     * @param screenHeight The height of the game screen.
-     * @param screenWidth The width of the game screen.
-     */
     public LevelBoss(double screenHeight, double screenWidth) {
         super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
 
-        // Initialize the shield image at (0,0)
         shieldImage = new ShieldImage(0, 0);
         boss = new BossPlane(shieldImage);
 
-        // Adjust the position of the shield image
-        double xOffset = 30;  // Adjusted value to move the shield more to the left
-        double yOffset = 150; // Keep this value as needed
+        double xOffset = 30;
+        double yOffset = 150;
 
-        // Match the shield's X position with the boss plane's X position
         shieldImage.layoutXProperty().bind(
             boss.layoutXProperty()
             .add(boss.translateXProperty())
@@ -49,39 +31,34 @@ public class LevelBoss extends LevelParent {
             .add(xOffset)
         );
 
-        // Match the shield's Y position with the boss plane's Y position
         shieldImage.layoutYProperty().bind(
             boss.layoutYProperty()
             .add(boss.translateYProperty())
             .subtract(ShieldImage.SHIELD_SIZE / 2)
             .add(yOffset)
         );
+
+        getTimerManager().startTimer(); // Start the timer when the level begins
     }
 
-    /**
-     * Initializes friendly units in the game, including the user and the shield image.
-     */
     @Override
     protected void initializeFriendlyUnits() {
         getRoot().getChildren().add(getUser());
         getRoot().getChildren().add(shieldImage);
     }
-    
-    /**
-     * Checks if the game is over by verifying if the user or the boss is destroyed.
-     */
+
     @Override
     protected void checkIfGameOver() {
         if (userIsDestroyed()) {
+            getTimerManager().stopTimer(); // Stop the timer when the level ends
             loseGame();
         } else if (boss.isDestroyed()) {
+            getTimerManager().stopTimer(); // Stop the timer when the level ends
+            getTimerManager().storeLevelTime(3); // Store the time for level three
             winGame();
         }
     }
 
-    /**
-     * Spawns enemy units, specifically the boss plane, if no enemies are present.
-     */
     @Override
     protected void spawnEnemyUnits() {
         if (getCurrentNumberOfEnemies() == 0) {
@@ -89,34 +66,27 @@ public class LevelBoss extends LevelParent {
         }
     }
 
-    /**
-     * Instantiates the view for the boss level.
-     * 
-     * @return The LevelBossView instance.
-     */
     @Override
     protected LevelBossView instantiateLevelView() {
-        levelView = new LevelBossView(getRoot(), PLAYER_INITIAL_HEALTH);
-        return levelView;
+        return (LevelBossView) LevelViewFactory.createLevelView("LevelBossView", getRoot(), PLAYER_INITIAL_HEALTH);
     }
 
-    /**
-     * Updates the status text to show the remaining health of the boss.
-     */
     @Override
     protected void updateStatusText() {
         int bossHealth = Math.max(boss.getHealth(), 0);
-        updateStatusText("Remaining boss health: " + bossHealth);
+        statusManager.updateStatusText("Remaining boss health: " + bossHealth);
     }
 
-    /**
-     * Handles the actions to be taken when the player wins the game.
-     */
     @Override
     protected void winGame() {
         getTimelineManager().stop();
         Stage stage = (Stage) getRoot().getScene().getWindow();
-        WinGameScreen winGameScreen = new WinGameScreen(stage);
+        WinGameScreen winGameScreen = new WinGameScreen(stage, getTimerManager().getTotalTime());
         winGameScreen.show();
+    }
+
+    @Override
+    public void onProjectileFired(ActiveActorDestructible projectile) {
+        getProjectileManager().onProjectileFired(projectile);
     }
 }
