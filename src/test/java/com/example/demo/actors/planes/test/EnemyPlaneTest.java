@@ -1,8 +1,10 @@
-package com.example.demo.actors.planes;
+package com.example.demo.actors.planes.test;
 
 import javafx.embed.swing.JFXPanel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import com.example.demo.actors.planes.EnemyPlane;
 
 import static org.junit.jupiter.api.Assertions.*;
 
