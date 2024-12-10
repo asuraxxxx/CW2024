@@ -8,12 +8,22 @@ import javafx.scene.image.ImageView;
 import com.example.demo.actors.ActiveActorDestructible;
 import com.example.demo.actors.planes.UserPlane;
 
+/**
+ * The InputManager class manages user input for controlling the user plane and firing projectiles.
+ */
 public class InputManager {
 
     private final UserPlane user;
     private final ImageView background;
     private final ProjectileFiredListener projectileFiredListener;
 
+    /**
+     * Constructs a new InputManager.
+     *
+     * @param user the user plane
+     * @param background the background image view
+     * @param projectileFiredListener the listener for projectile firing events
+     */
     public InputManager(UserPlane user, ImageView background, ProjectileFiredListener projectileFiredListener) {
         this.user = user;
         this.background = background;
@@ -21,6 +31,9 @@ public class InputManager {
         initializeKeyHandlers();
     }
 
+    /**
+     * Initializes key handlers for user input managed by InputManager.
+     */
     private void initializeKeyHandlers() {
         background.setFocusTraversable(true);
         background.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -44,6 +57,9 @@ public class InputManager {
         });
     }
 
+    /**
+     * Interface for listening to projectile firing events.
+     */
     public interface ProjectileFiredListener {
         void onProjectileFired(ActiveActorDestructible projectile);
     }

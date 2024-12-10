@@ -14,6 +14,7 @@ public abstract class ActiveActor extends ImageView {
     /**
      * Constructor for ActiveActor.
      * Initializes the actor with a specific image, size, and initial position.
+     *
      * @param imageName The image file name for the actor.
      * @param imageHeight The height of the actor image.
      * @param initialXPos The initial X position of the actor.
@@ -35,6 +36,7 @@ public abstract class ActiveActor extends ImageView {
 
     /**
      * Moves the actor horizontally by a specified amount.
+     *
      * @param horizontalMove The amount to move the actor horizontally.
      */
     public void moveHorizontally(double horizontalMove) {
@@ -43,6 +45,7 @@ public abstract class ActiveActor extends ImageView {
 
     /**
      * Moves the actor vertically by a specified amount.
+     *
      * @param verticalMove The amount to move the actor vertically.
      */
     public void moveVertically(double verticalMove) {

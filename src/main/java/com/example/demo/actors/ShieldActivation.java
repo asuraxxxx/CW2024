@@ -18,6 +18,7 @@ public class ShieldActivation {
     /**
      * Constructor for ShieldActivation.
      * Initializes the shield with the specified image and sets initial states.
+     *
      * @param shieldImage The image used to represent the shield.
      */
     public ShieldActivation(ShieldImage shieldImage) {
@@ -47,6 +48,7 @@ public class ShieldActivation {
 
     /**
      * Checks if the shield duration has been exhausted.
+     *
      * @return True if the shield duration has been exhausted, false otherwise.
      */
     private boolean shieldExhausted() {
@@ -75,6 +77,7 @@ public class ShieldActivation {
 
     /**
      * Checks if the shield is currently active.
+     *
      * @return True if the shield is active, false otherwise.
      */
     public boolean isShielded() {

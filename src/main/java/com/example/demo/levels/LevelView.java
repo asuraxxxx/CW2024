@@ -27,7 +27,7 @@ public class LevelView {
 
     /**
      * Constructor for LevelView.
-     * 
+     *
      * @param root The root group of the scene.
      * @param heartsToDisplay The number of hearts to display for the player's health.
      */
@@ -52,7 +52,7 @@ public class LevelView {
 
     /**
      * Returns the root group of the scene.
-     * 
+     *
      * @return The root group.
      */
     public Group getRoot() {
@@ -75,7 +75,7 @@ public class LevelView {
 
     /**
      * Removes hearts from the heart display to reflect the player's remaining health.
-     * 
+     *
      * @param heartsRemaining The number of hearts remaining.
      */
     public void removeHearts(int heartsRemaining) {

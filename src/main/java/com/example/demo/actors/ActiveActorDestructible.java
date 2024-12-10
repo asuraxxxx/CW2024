@@ -11,6 +11,7 @@ public abstract class ActiveActorDestructible extends ActiveActor implements Des
     /**
      * Constructor for ActiveActorDestructible.
      * Initializes the actor with specific attributes and sets the destroyed flag to false.
+     *
      * @param imageName The image file name for the actor.
      * @param imageHeight The height of the actor image.
      * @param initialXPos The initial X position of the actor.
@@ -52,6 +53,7 @@ public abstract class ActiveActorDestructible extends ActiveActor implements Des
 
     /**
      * Sets the destroyed flag for the actor.
+     *
      * @param isDestroyed The new value for the destroyed flag.
      */
     protected void setDestroyed(boolean isDestroyed) {
@@ -60,6 +62,7 @@ public abstract class ActiveActorDestructible extends ActiveActor implements Des
 
     /**
      * Checks if the actor is destroyed.
+     *
      * @return True if the actor is destroyed, false otherwise.
      */
     public boolean isDestroyed() {

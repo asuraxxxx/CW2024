@@ -8,10 +8,18 @@ import com.example.demo.actors.planes.EnemyPlane;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for the EnemyPlane class.
+ * This class contains unit tests for the EnemyPlane class using JUnit 5.
+ */
 public class EnemyPlaneTest {
 
     private EnemyPlane enemyPlane;
 
+    /**
+     * Sets up the test environment before each test.
+     * Initializes the JavaFX environment and creates an instance of EnemyPlane for testing.
+     */
     @BeforeEach
     public void setUp() {
         // Initialize JavaFX environment
@@ -21,6 +29,10 @@ public class EnemyPlaneTest {
         enemyPlane = new EnemyPlane(100, 200);
     }
 
+    /**
+     * Tests the updateActor method of the EnemyPlane class.
+     * Verifies that the position of the enemy plane is updated correctly.
+     */
     @Test
     public void testUpdateActor() {
         // Initial position

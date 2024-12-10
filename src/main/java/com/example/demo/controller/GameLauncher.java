@@ -23,6 +23,7 @@ public class GameLauncher extends Application {
     /**
      * The start method is called when the application is launched.
      * It sets up the stage properties and initializes the main menu.
+     *
      * @param stage The primary stage for the application.
      */
     @Override
@@ -40,6 +41,7 @@ public class GameLauncher extends Application {
 
     /**
      * Starts a level using the LevelFactory.
+     *
      * @param levelName The name of the level to start.
      * @param screenHeight The height of the game window.
      * @param screenWidth The width of the game window.
@@ -55,6 +57,7 @@ public class GameLauncher extends Application {
     /**
      * The main method is the entry point of the application.
      * It initializes the MusicController and launches the application.
+     *
      * @param args The command line arguments.
      */
     public static void main(String[] args) {

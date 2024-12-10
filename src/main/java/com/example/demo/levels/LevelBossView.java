@@ -18,7 +18,7 @@ public class LevelBossView extends LevelView {
 
     /**
      * Constructor for LevelBossView.
-     * 
+     *
      * @param root The root group of the scene.
      * @param heartsToDisplay The number of hearts to display for the player's health.
      */
