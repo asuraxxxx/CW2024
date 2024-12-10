@@ -1,5 +1,10 @@
-package com.example.demo.actors.planes;
+package com.example.demo.factories;
 
+import com.example.demo.actors.planes.BossPlane;
+import com.example.demo.actors.planes.EnemyPlane;
+import com.example.demo.actors.planes.EnemyPlane2;
+import com.example.demo.actors.planes.FighterPlane;
+import com.example.demo.actors.planes.UserPlane;
 import com.example.demo.ui.images.ShieldImage;
 
 public class PlaneFactory {

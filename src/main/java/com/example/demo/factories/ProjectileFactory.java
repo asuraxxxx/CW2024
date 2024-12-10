@@ -1,4 +1,9 @@
-package com.example.demo.actors.projectiles;
+package com.example.demo.factories;
+
+import com.example.demo.actors.projectiles.BossProjectile;
+import com.example.demo.actors.projectiles.EnemyProjectile;
+import com.example.demo.actors.projectiles.Projectile;
+import com.example.demo.actors.projectiles.UserProjectile;
 
 public class ProjectileFactory {
 
