@@ -31,6 +31,7 @@ https://github.com/asuraxxxx/CW2024
 git clone https://github.com/asuraxxxx/CW2024.git
 cd CW2024
 ```
+<br>
 
 **2. Open the Project in Eclipse**
 <li>Launch Eclipse on your computer.</li>
@@ -42,6 +43,7 @@ cd CW2024
 <li>Select the local directory where you want to store the repository and click Next.</li>
 <li>Choose Import existing Eclipse projects and click Next.</li>
 <li>Select the project and click Finish.</li>
+<br>
 
 
 **3. Install Dependencies**
@@ -51,19 +53,23 @@ cd CW2024
     <li>Right-click on the project in the Project Explorer.</li>
     <li>Select Run As > Maven install.</li>
   </ul>
+  <br>
 
 
 **4. Compile the Code**
 <li>Eclipse will automatically compile the code as you make changes.</li>
 <li>To manually build the project, go to Project > Build Project.</li>
+<br>
 
 
 **5. Run the Application**
-<li>Right-click the file and select Run <code>GameLauncher.java</code> located at <code>src/main/java/com/example/demo/controller</code></li><br>
+<li>Right-click the file and select Run <code>GameLauncher.java</code> located at <code>src/main/java/com/example/demo/controller</code></li>
+<br>
 
 
 **6. Right-click on the main class file and select Run As > Java Application.**
 <li>Ensure any additional dependencies or special settings required are configured. This might include setting up environment variables or configuring specific IDE settings.</li>
+<br>
 
 
 # Implemented and Working Properly
@@ -82,11 +88,11 @@ cd CW2024
       <li>The pause menu has a resume button that allows user to resume the game.</li>
       <li>The pause menu has a setting button that allows user to press into instruction screen.</li>
       <li>The pause menu has a return to main menu button to return to main menu.</li>
-    </ul>
+    </ul><br>
 
 
 **2. User Plane Enhancements**
-<li>The user plane can move left and right, allowing for smooth horizontal navigation during gameplay.</li>
+<li>The user plane can move left and right, allowing for smooth horizontal navigation during gameplay.</li><br>
 
 
 **3. Visual and Audio Improvements**
@@ -106,7 +112,7 @@ cd CW2024
       <li>Added pause screen button icon for pause screen button.</li>
       <li>Changed heart icon.</li>
     </ul>
-<li>Included sound effects for firing projectiles and background music.</li>
+<li>Included sound effects for firing projectiles and background music.</li><br>
 
 
 **4. Gameplay Additions**
@@ -127,7 +133,7 @@ cd CW2024
       <li>The win game screen will display the total time used to complete all levels.</li>
       <li>The win game screen has a restart button that allows user to restart to level one and play again.</li>
       <li>The win game screen has a return to main menu button that allows user to return to main menu.</li>
-    </ul>
+    </ul><br>
 
 
 **5. Leaderboard**
@@ -136,18 +142,38 @@ cd CW2024
       <li>The leaderboard screen will records the time used to complete level one , level two and level boss.</li>
       <li>The leaderboard screen will add up the total time used to complete all levels and display them in a decending order</li>
       <li>The leaderboard screen allows user to clear up previous records.</li>
-    </ul>
-
-
-
-
-
-
-
-
-
+    </ul><br>
+    
 
 # Implemented but Not Working Properly
+**1. Hitbox Adjustments**
+<table style="width:100%">
+  <tr>
+    <th>Feature</th>
+    <th>Encountered Issue</th>
+    <th>Steps Taken to Address</th>
+  </tr>
+  <tr>
+    <td>
+     Adjusting the hitbox of the user plane, enemy planes, and boss plane to be smaller, preventing projectiles from hitting empty space.
+    </td>
+    <td>
+      Despite attempts to adjust the hitboxes, projectiles still hit empty spaces around the planes. The hitboxes are not accurately reflecting the visual boundaries of the planes.
+    </td>
+    <td>
+     Reviewed the hitbox calculation and test with different hitbox sizes <br><br>
+      Current steps to address:
+      <ul>
+        <li>Ensure that the hitbox dimensions are correctly calculated based on the visual dimensions of the planes.</li>
+        <li>Verify that the hitbox coordinates are correctly aligned with the plane sprites.</li>
+        <li>Experiment with different hitbox sizes and shapes to find the optimal dimensions that prevent projectiles from hitting empty spaces.</li>
+        <li>Test the adjustments in various scenarios to ensure consistency across different planes and levels.</li>
+      </ul>
+      Unfortunely, the problem remains unsolved currently and needed to be solved in the future.
+    </td>
+  </tr>
+</table><br>
+
 
 # Features Not Implemented
 
