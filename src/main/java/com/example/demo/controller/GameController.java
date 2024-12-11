@@ -27,6 +27,7 @@ public class GameController {
     /**
      * Constructor for GameController.
      * Initializes the controller with the primary stage.
+     *
      * @param stage The primary stage for the game.
      */
     public GameController(Stage stage) {
@@ -35,6 +36,7 @@ public class GameController {
 
     /**
      * Launches the game by showing the stage and starting the first level.
+     *
      * @throws ClassNotFoundException If the level class is not found.
      * @throws NoSuchMethodException If the level class does not have the expected constructor.
      * @throws SecurityException If there is a security violation.
@@ -44,13 +46,14 @@ public class GameController {
      * @throws InvocationTargetException If the constructor throws an exception.
      */
     public void launchGame() throws ClassNotFoundException, NoSuchMethodException, SecurityException,
-            InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException  {
+            InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         stage.show();
         goToLevel(LEVEL_ONE_CLASS_NAME);
     }
 
     /**
      * Transitions to the specified level.
+     *
      * @param className The class name of the level to transition to.
      * @throws ClassNotFoundException If the level class is not found.
      * @throws NoSuchMethodException If the level class does not have the expected constructor.
@@ -87,6 +90,7 @@ public class GameController {
 
     /**
      * Applies a fade-in transition to the specified scene.
+     *
      * @param scene The scene to which the fade-in transition is applied.
      */
     private void applyFadeInTransition(Scene scene) {
@@ -100,6 +104,7 @@ public class GameController {
 
     /**
      * Transitions to the next level specified by the level name.
+     *
      * @param levelName The class name of the next level.
      */
     private void goToNextLevel(String levelName) {
@@ -113,6 +118,7 @@ public class GameController {
 
     /**
      * Shows an alert with the specified exception message.
+     *
      * @param e The exception that occurred.
      */
     private void showAlert(Exception e) {

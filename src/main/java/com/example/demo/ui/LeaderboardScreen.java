@@ -24,11 +24,19 @@ public class LeaderboardScreen {
     private static List<Long> leaderboardTimes = new ArrayList<>();
     private static final String LEADERBOARD_FILE = "leaderboard.txt";
 
+    /**
+     * Constructs a new LeaderboardScreen.
+     *
+     * @param stage the primary stage of the application
+     */
     public LeaderboardScreen(Stage stage) {
         this.primaryStage = stage;
         loadLeaderboardData();
     }
 
+    /**
+     * Displays the leaderboard screen.
+     */
     public void show() {
         VBox layout = new VBox(20);
         layout.setAlignment(Pos.CENTER);
@@ -90,11 +98,19 @@ public class LeaderboardScreen {
         primaryStage.setScene(scene);
     }
 
+    /**
+     * Adds a new time to the leaderboard and saves the data.
+     *
+     * @param time the time to add
+     */
     public static void addTime(long time) {
         leaderboardTimes.add(time);
         saveLeaderboardData();
     }
 
+    /**
+     * Saves the leaderboard data to a file.
+     */
     private static void saveLeaderboardData() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(LEADERBOARD_FILE))) {
             for (Long time : leaderboardTimes) {
@@ -106,6 +122,9 @@ public class LeaderboardScreen {
         }
     }
 
+    /**
+     * Loads the leaderboard data from a file.
+     */
     private static void loadLeaderboardData() {
         leaderboardTimes.clear();
         try (BufferedReader reader = new BufferedReader(new FileReader(LEADERBOARD_FILE))) {
@@ -118,6 +137,9 @@ public class LeaderboardScreen {
         }
     }
 
+    /**
+     * Clears the leaderboard data and refreshes the leaderboard screen.
+     */
     private void clearLeaderboard() {
         leaderboardTimes.clear();
         saveLeaderboardData();

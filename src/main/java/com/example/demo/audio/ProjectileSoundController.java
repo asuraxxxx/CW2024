@@ -12,6 +12,7 @@ public class ProjectileSoundController {
 
     /**
      * Plays the specified sound file.
+     *
      * @param soundFile The path to the sound file to be played.
      */
     public static void playSound(String soundFile) {

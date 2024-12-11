@@ -13,19 +13,33 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.text.Font;
 
+/**
+ * The PauseScreen class represents a pause screen in a JavaFX application.
+ * It provides options to resume the game, go to settings, or return to the main menu.
+ */
 public class PauseScreen {
 
     private final Stage stage;
-    
     private final Runnable resume;
     private final Runnable settings;
 
+    /**
+     * Constructs a PauseScreen with the specified stage and actions.
+     *
+     * @param stage the primary stage of the application
+     * @param resumeAction the action to perform when the resume button is clicked
+     * @param settingsAction the action to perform when the settings button is clicked
+     */
     public PauseScreen(Stage stage, Runnable resumeAction, Runnable settingsAction) {
         this.stage = stage;
         this.resume = resumeAction;
         this.settings = settingsAction;
     }
 
+    /**
+     * Displays the pause screen.
+     * This method creates a new stage for the pause screen and sets up the layout and buttons.
+     */
     public void show() {
         Stage pauseStage = new Stage();
         pauseStage.initModality(Modality.APPLICATION_MODAL);
@@ -107,6 +121,10 @@ public class PauseScreen {
         pauseStage.showAndWait();
     }
 
+    /**
+     * Displays the settings screen.
+     * This method creates a new stage for the settings screen and sets up the layout and buttons.
+     */
     public void showSettings() {
         Stage settingsStage = new Stage();
         settingsStage.initModality(Modality.APPLICATION_MODAL);
@@ -152,7 +170,6 @@ public class PauseScreen {
         instructionButton.setGraphic(instructionImageView);
         instructionButton.setOnAction(event -> showInstructions());
         layout.getChildren().add(instructionButton);
-
         Button closeButton = new Button();
         closeButton.setPrefWidth(30);
         closeButton.setPrefHeight(30);
@@ -174,6 +191,10 @@ public class PauseScreen {
         settingsStage.showAndWait();
     }
 
+    /**
+     * Displays the instructions screen.
+     * This method creates a new stage for the instructions screen and sets up the layout and buttons.
+     */
     public void showInstructions() {
         Stage instructionsStage = new Stage();
         instructionsStage.initModality(Modality.APPLICATION_MODAL);

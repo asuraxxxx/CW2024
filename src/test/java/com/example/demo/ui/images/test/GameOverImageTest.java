@@ -9,14 +9,26 @@ import com.example.demo.ui.images.GameOverImage;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for the GameOverImage class.
+ * This class contains unit tests for the GameOverImage class using JUnit 5.
+ */
 public class GameOverImageTest {
 
+    /**
+     * Sets up the test environment before each test.
+     * Initializes the JavaFX environment.
+     */
     @BeforeEach
     public void setUp() {
         // Initialize JavaFX environment
         new JFXPanel();
     }
 
+    /**
+     * Tests the initialization of the GameOverImage.
+     * Verifies that the image is loaded correctly, the dimensions are set properly, and the position is accurate.
+     */
     @Test
     public void testGameOverImageInitialization() {
         double xPosition = 100;

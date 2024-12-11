@@ -7,13 +7,13 @@ package com.example.demo.actors;
 public interface Destructible {
 
     /**
-     * Method to handle the object taking damage.
+     * Handles the object taking damage.
      * Implementations should define how the object responds to damage.
      */
     void takeDamage();
 
     /**
-     * Method to handle the destruction of the object.
+     * Handles the destruction of the object.
      * Implementations should define what happens when the object is destroyed.
      */
     void destroy();

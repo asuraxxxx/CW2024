@@ -22,6 +22,7 @@ public class MusicController {
 
     /**
      * Returns the singleton instance of MusicController.
+     *
      * @return The singleton instance.
      */
     public static MusicController getInstance() {
@@ -34,6 +35,7 @@ public class MusicController {
     /**
      * Plays the specified music file.
      * Stops any currently playing music before starting the new one.
+     *
      * @param musicFile The path to the music file to be played.
      */
     public void playMusic(String musicFile) {
@@ -67,6 +69,7 @@ public class MusicController {
 
     /**
      * Sets the volume for the music playback.
+     *
      * @param volume The volume level to be set (0.0 to 1.0).
      */
     public void setVolume(double volume) {
@@ -78,6 +81,7 @@ public class MusicController {
 
     /**
      * Gets the current volume level.
+     *
      * @return The current volume level.
      */
     public double getVolume() {

@@ -13,6 +13,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.geometry.Pos;
 
+/**
+ * The WinGameScreen class displays the screen shown when the player wins the game.
+ */
 public class WinGameScreen {
 
     private final Stage stage;
@@ -20,6 +23,12 @@ public class WinGameScreen {
     private final Button returnToMainMenuButton;
     private final long totalTime;
 
+    /**
+     * Constructs a new WinGameScreen.
+     *
+     * @param stage the primary stage of the application
+     * @param totalTime the total time taken to win the game
+     */
     public WinGameScreen(Stage stage, long totalTime) {
         this.stage = stage;
         this.totalTime = totalTime;
@@ -28,6 +37,12 @@ public class WinGameScreen {
         LeaderboardScreen.addTime(totalTime); // Store the total time in the leaderboard
     }
 
+    /**
+     * Creates a button with an image.
+     *
+     * @param imagePath the path to the image file
+     * @return the created button
+     */
     private Button createImageButton(String imagePath) {
         Image image = new Image(getClass().getResource(imagePath).toExternalForm());
         ImageView imageView = new ImageView(image);
@@ -38,6 +53,9 @@ public class WinGameScreen {
         return button;
     }
 
+    /**
+     * Displays the win game screen.
+     */
     public void show() {
         Platform.runLater(() -> {
             Stage winStage = new Stage();
@@ -104,10 +122,20 @@ public class WinGameScreen {
         });
     }
 
+    /**
+     * Gets the restart level button.
+     *
+     * @return the restart level button
+     */
     public Button getRestartLevelButton() {
         return restartLevelButton;
     }
 
+    /**
+     * Gets the return to main menu button.
+     *
+     * @return the return to main menu button
+     */
     public Button getReturnToMainMenuButton() {
         return returnToMainMenuButton;
     }

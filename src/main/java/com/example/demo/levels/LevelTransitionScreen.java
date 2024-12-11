@@ -14,6 +14,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * The LevelTransitionScreen class manages the transition screen between levels,
+ * including animations and text display.
+ */
 public class LevelTransitionScreen {
 
     private final Stage stage;
@@ -21,6 +25,14 @@ public class LevelTransitionScreen {
     private final Text transitionText;
     private final Pane penguinShape;
 
+    /**
+     * Constructs a LevelTransitionScreen with specified parameters.
+     *
+     * @param stage The primary stage for the transition.
+     * @param message The message to display during the transition.
+     * @param width The width of the transition screen.
+     * @param height The height of the transition screen.
+     */
     public LevelTransitionScreen(Stage stage, String message, double width, double height) {
         this.stage = stage;
 
@@ -105,6 +117,11 @@ public class LevelTransitionScreen {
         penguinShape.setLayoutX(-100);
     }
 
+    /**
+     * Shows the transition screen with animations and executes a callback when the transition ends.
+     *
+     * @param onTransitionEnd The callback to execute when the transition ends.
+     */
     public void showTransition(Runnable onTransitionEnd) {
         FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), transitionText);
         fadeIn.setFromValue(0);
@@ -125,10 +142,21 @@ public class LevelTransitionScreen {
         penguinAnimation.setOnFinished(event -> onTransitionEnd.run());
     }
 
+    /**
+     * Returns the transition scene.
+     *
+     * @return The transition scene.
+     */
     public Scene getTransitionScene() {
         return this.transitionScene;
     }
 
+    /**
+     * Fades out the current scene and executes a callback when the fade-out is complete.
+     *
+     * @param stage The primary stage.
+     * @param callback The callback to execute when the fade-out is complete.
+     */
     public static void fadeOutCurrentScene(Stage stage, Runnable callback) {
         Scene currentScene = stage.getScene();
         FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), currentScene.getRoot());
