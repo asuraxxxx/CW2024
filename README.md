@@ -1450,7 +1450,103 @@ cd CW2024
       <li>The functionality of displaying a win screen has been replaced with a full-screen win game screen implementation to provide a more immersive experience. The standalone image view approach is no longer required.</li>
     </td>
   </tr>
-</table>
-
+</table><br>
 
 # Unexpected Problems
+
+**1. Time Management Challenges During Project Development**  
+<table style="width:100%">
+  <tr>
+    <th>Problem</th>
+    <th>Solutions</th>
+  </tr>
+  <tr>
+    <td>
+      The project faced challenges in managing time effectively due to the following reasons:
+      <ul>
+        <li>Underestimating the complexity of integrating new features and refactoring existing code.</li>
+        <li>Spending excessive time debugging tightly coupled components that caused cascading issues across the codebase.</li>
+        <li>Limited initial planning for handling unexpected technical roadblocks, such as adapting to new patterns or tools.</li>
+      </ul>
+    </td>
+    <td>
+      Several steps were taken to improve time management and meet project deadlines:
+      <ul>
+        <li>Adopted an iterative development approach, prioritizing critical features and completing them in smaller, manageable sprints.</li>
+        <li>Utilized task management tools to break the project into smaller milestones and track progress effectively.</li>
+        <li>Dedicated time for learning and implementing key design patterns upfront, reducing debugging and rework time later.</li>
+        <li>Scheduled regular reviews to assess progress, reallocate resources, and address bottlenecks promptly.</li>
+      </ul>
+      These measures ensured the project stayed on track despite initial challenges and led to a well-organized and timely completion.
+    </td>
+  </tr>
+</table>  
+
+ 
+**2. Build Path Compatibility Issue**  
+<table style="width:100%">
+  <tr>
+    <th>Problem</th>
+    <th>How It Was Addressed</th>
+  </tr>
+  <tr>
+    <td>
+      The build path specified the environment <strong>JavaSE-19</strong>. However, no JREs installed in the workspace were strictly compatible with this version. This caused errors in building and running the project.
+    </td>
+    <td>
+      To resolve the issue:
+      <ul>
+        <li>Removed the incompatible <strong>JavaSE-19</strong> JDK from the project configuration.</li>
+        <li>Installed and configured <strong>JDK-22</strong>, ensuring compatibility with the project's requirements.</li>
+        <li>Updated the project's build path to reference the new <strong>JDK-22</strong> environment.</li>
+        <li>Validated the setup by rebuilding the project and verifying that no compatibility errors remained.</li>
+      </ul>
+      This solution ensured the project could be built and run successfully with the correct Java environment.
+    </td>
+  </tr>
+</table>  
+
+**3. JavaFX Module Accessibility Issue**  
+<table style="width:100%">
+  <tr>
+    <th>Problem</th>
+    <th>How It Was Addressed</th>
+  </tr>
+  <tr>
+    <td>
+      The `Stage` type from the `javafx.graphics` module was not accessible to clients due to a missing `requires transitive` directive in the `module-info.java` file. This caused runtime errors and limited functionality for JavaFX components.
+    </td>
+    <td>
+      To address the issue:
+      <ul>
+        <li>Updated the `module-info.java` file to include a <strong>`requires transitive javafx.graphics`</strong> directive.</li>
+        <li>Ensured all dependent modules could access the `Stage` type and related JavaFX features.</li>
+        <li>Recompiled the project to verify that the directive resolved the accessibility problem.</li>
+      </ul>
+      This modification ensured proper accessibility of JavaFX components throughout the application, enhancing modular design and functionality.
+    </td>
+  </tr>
+</table> 
+
+**4. FXML Directory Issue**  
+<table style="width:100%">
+  <tr>
+    <th>Problem</th>
+    <th>How It Was Addressed</th>
+  </tr>
+  <tr>
+    <td>
+      The application encountered difficulties locating FXML files due to incorrect directory structure or misconfigured resource paths. This caused runtime errors when attempting to load the FXML files for the user interface.
+    </td>
+    <td>
+      To resolve the issue:
+      <ul>
+        <li>Verified that all FXML files were placed in the correct resource directory (`src/main/resources`).</li>
+        <li>Updated all file paths in the code to use the <strong>`getClass().getResource()`</strong> method for consistent resource loading.</li>
+        <li>Ensured that the FXML files were included in the build process by checking the IDE and build tool configuration (e.g., Maven/Gradle).</li>
+        <li>Tested the application after adjustments to confirm that the FXML files were loading correctly without errors.</li>
+      </ul>
+      These steps ensured the proper location and accessibility of FXML files, enabling seamless UI rendering.
+    </td>
+  </tr>
+</table>  
