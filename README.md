@@ -2,6 +2,7 @@
 
 - [Github Repository](#github-repository)
 - [My Info](#my-info)
+- [Basic Introduction](#basic-introduction)
 - [Compilation Instructions](#compilation-instructions)
 - [Implemented and Working Properly](#implemented-and-working-properly)
 - [Implemented but Not Working Properly](#implemented-but-not-working-properly)
@@ -18,6 +19,9 @@ https://github.com/asuraxxxx/CW2024
 **Name: Adrian Fo Wen Keat**  <br>
 **Student ID: 20509540**  <br>
 **Link: https://github.com/asuraxxxx/CW2024** 
+
+# Basic Introduction
+**This coursework focuses on maintaining and extending a re-implementation of the classic retro game *1942*. The current version of the game is incomplete but becomes functional with proper setup. In this game, players control a plane located on the left side of the screen, navigating it up and down using arrow keys to shoot down enemy targets appearing on the screen. The main goal is to refine and expand the gameplay experience while ensuring the game runs smoothly and adheres to the original's nostalgic charm.**
 
 # Compilation Instructions
 ## Prerequisites
