@@ -690,6 +690,17 @@ cd CW2024
    src/main/java/com/example/demo/levels/LevelBossView.java
    </td>
 </tr>
+<tr>
+   <td>
+    34. TimerManager
+   </td>
+   <td>
+    The TimerManager class manages the timing and duration tracking for different levels in the game. It provides functionality to start, stop, and store elapsed times for individual levels and calculate the total time across all levels.
+   </td>
+   <td>
+    src/main/java/com/example/demo/managers/TimerManager.java
+   </td>
+</tr>
 </table><br>
 
 
@@ -1426,5 +1437,20 @@ cd CW2024
 </table><br>
 
 # Deleted Java Classes
+<table style="width:100%">
+  <tr>
+    <th>Deleted Java Classes</th>
+    <th>Reasons for Deletion</th>
+  </tr>
+  <tr>
+    <td>
+      WinImage.java
+    </td>
+    <td>
+      <li>The functionality of displaying a win screen has been replaced with a full-screen win game screen implementation to provide a more immersive experience. The standalone image view approach is no longer required.</li>
+    </td>
+  </tr>
+</table>
+
 
 # Unexpected Problems
