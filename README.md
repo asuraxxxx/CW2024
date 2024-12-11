@@ -657,7 +657,6 @@ cd CW2024
    src/main/java/com/example/demo/ui/WinGameScreen.java
    </td>
 </tr>
-</table>
 <tr>
    <td>
     31. GameController (Controller.java to GameController.java)
@@ -691,6 +690,7 @@ cd CW2024
    src/main/java/com/example/demo/levels/LevelBossView.java
    </td>
 </tr>
+</table><br>
 
 
 # Modified Java Classes
@@ -1118,7 +1118,7 @@ cd CW2024
   </tr>
   <tr>
     <td>
-       <li`initializeFriendlyUnits()` adds the user plane to the game screen.</li>
+       <li>`initializeFriendlyUnits()` adds the user plane to the game screen.</li>
     </td>
     <td>
     <li>The `initializeFriendlyUnits()` method now uses `ActorManager` to initialize both friendly units and enemy units, centralizing unit management and making the class more scalable.</li>
