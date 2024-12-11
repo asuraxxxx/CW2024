@@ -17,7 +17,7 @@ https://github.com/asuraxxxx/CW2024
 # My Info
 **Name: Adrian Fo Wen Keat**  <br>
 **Student ID: 20509540**  <br>
-**Link: https://github.com/asuraxxx/CW2024** 
+**Link: https://github.com/asuraxxxx/CW2024** 
 
 # Compilation Instructions
 ## Prerequisites
@@ -320,6 +320,345 @@ cd CW2024
 
 
 # New Java Classes
+<table style="width:100%">
+<tr>
+  <th>New Classes</th>
+  <th>Description</th>
+  <th>Location</th>
+</tr>
+<tr>
+   <td>
+    1. EnemyPlane2
+    </td>
+    <td>
+     The EnemyPlane2 class is a new type of enemy aircraft in a game that moves horizontally and can randomly fire projectiles at the player.
+    </td>
+    <td>
+      <a href="src/main/java/com/example/demo/actor/planes/EnemyPlane2.java">src/main/java/com/example/demo/actor/planes/EnemyPlane2.java</a>
+    </td>
+</tr>
+<tr>
+   <td>
+    2. ShieldActivation
+    </td>
+    <td>
+     The ShieldActivation class manages the activation, deactivation, and cooldown of a shield for an actor, including its visual representation and duration logic.
+    </td>
+    <td>
+      <a href="src/main/java/com/example/demo/actor/ShieldActivation.java">src/main/java/com/example/demo/actor/ShieldActivation.java</a>
+    </td>
+</tr>
+<tr>
+   <td>
+    3. MusicController
+    </td>
+    <td>
+     The MusicController class manages the playback of background music in a game, ensuring only one instance exists using the singleton pattern.
+    </td>
+    <td>
+      <a href="src/main/java/com/example/demo/audios/MusicController.java">src/main/java/com/example/demo/audios/MusicController.java</a>
+    </td>
+</tr>
+<tr>
+   <td>
+    4. ProjectileSoundController
+    </td>
+    <td>
+     The ProjectileSoundController class handles the playback of sound effects for projectiles by providing a method to play specified sound files.
+    </td>
+    <td>
+      <a href="src/main/java/com/example/demo/audios/ProjectileSoundController.java">src/main/java/com/example/demo/audios/ProjectileSoundController.java</a>
+    </td>
+</tr>
+<tr>
+   <td>
+    5. LevelFactory
+    </td>
+    <td>
+     The LevelFactory class is responsible for creating instances of different game levels using a factory method to instantiate the appropriate level based on the provided level name.
+    </td>
+    <td>
+      <a href="src/main/java/com/example/demo/factories/LevelFactory.java">src/main/java/com/example/demo/factories/LevelFactory.java</a>
+    </td>
+</tr>
+<tr>
+   <td>
+    6. LevelViewFactory
+   </td>
+   <td>
+     The LevelViewFactory class is responsible for creating instances of different level views using a factory method to determine the appropriate level view based on the provided level type.
+   </td>
+   <td>
+      <a href="src/main/java/com/example/demo/factories/LevelViewFactory.java">src/main/java/com/example/demo/factories/LevelViewFactory.java</a>
+   </td>
+</tr>
+<tr>
+   <td>
+    7. PlaneFactory
+   </td>
+   <td>
+     The PlaneFactory class is responsible for creating instances of different types of planes using a factory method to instantiate the appropriate plane based on the provided type.
+   </td>
+   <td>
+      <a href="src/main/java/com/example/demo/factories/PlaneFactory.java">src/main/java/com/example/demo/factories/PlaneFactory.java</a>
+   </td>
+</tr>
+<tr>
+   <td>
+    8. ProjectileFactory
+   </td>
+   <td>
+     The ProjectileFactory class is responsible for creating instances of different types of projectiles using a factory method to determine the appropriate projectile based on the provided type.
+   </td>
+   <td>
+      <a href="src/main/java/com/example/demo/factories/ProjectileFactory.java">src/main/java/com/example/demo/factories/ProjectileFactory.java</a>
+   </td>
+</tr>
+<tr>
+   <td>
+    9. LevelTwo
+   </td>
+   <td>
+     The LevelTwo class represents the second level of the game, extending the LevelParent class, and manages level-specific enemies, game state transitions, and gameplay logic for advancing to the next stage.
+   </td>
+   <td>
+      <a href="src/main/java/com/example/demo/levels/LevelTwo.java">src/main/java/com/example/demo/levels/LevelTwo.java</a>
+   </td>
+</tr>
+<tr>
+   <td>
+    10. LevelBossView
+   </td>
+   <td>
+     The LevelBossView class represents the visual components of the boss level, managing the display and visibility of the shield image alongside other visual elements.
+   </td>
+   <td>
+      <a href="src/main/java/com/example/demo/levels/LevelBossView.java">src/main/java/com/example/demo/levels/LevelBossView.java</a>
+   </td>
+</tr>
+<tr>
+   <td>
+    11. ActorManager
+   </td>
+   <td>
+     The ActorManager class manages game actors, including friendly units, enemy units, and projectiles, handling their updates, removal of destroyed actors, collisions, and spawning logic.
+   </td>
+   <td>
+      <a href="src/main/java/com/example/demo/managers/ActorManager.java">src/main/java/com/example/demo/managers/ActorManager.java</a>
+   </td>
+</tr>
+<tr>
+   <td>
+    12. BackgroundManager
+   </td>
+   <td>
+     The BackgroundManager class handles the background image in the game, including initializing its size, adding it to the scene, and managing potential updates.
+   </td>
+   <td>
+      <a href="src/main/java/com/example/demo/managers/BackgroundManager.java">src/main/java/com/example/demo/managers/BackgroundManager.java</a>
+   </td>
+</tr>
+<tr>
+   <td>
+    13. CollisionManager
+   </td>
+   <td>
+     The CollisionManager class handles collision detection and damage application between two lists of game actors.
+   </td>
+   <td>
+      <a href="src/main/java/com/example/demo/managers/CollisionManager.java">src/main/java/com/example/demo/managers/CollisionManager.java</a>
+   </td>
+</tr>
+<tr>
+   <td>
+    14. EnemyManager
+   </td>
+   <td>
+     The EnemyManager class handles the spawning, updating, and management of enemy units in the game, including detecting enemy penetration and removing destroyed enemies.
+   </td>
+   <td>
+      <a href="src/main/java/com/example/demo/managers/EnemyManager.java">src/main/java/com/example/demo/managers/EnemyManager.java</a>
+   </td>
+</tr>
+<tr>
+   <td>
+    15. GameStateManager
+   </td>
+   <td>
+     The GameStateManager class handles the win and lose conditions of the game, managing the game state by checking if the user has won or lost and transitioning to the next level if conditions are met.
+   </td>
+   <td>
+      <a href="src/main/java/com/example/demo/managers/GameStateManager.java">src/main/java/com/example/demo/managers/GameStateManager.java</a>
+   </td>
+</tr>
+<tr>
+   <td>
+    16. InputManager
+   </td>
+   <td>
+     The InputManager class manages user input for controlling the user plane's movement and firing projectiles. It listens for key events, such as movement and space bar presses, and invokes the appropriate actions on the user plane and projectiles.
+   </td>
+   <td>
+      <a href="src/main/java/com/example/demo/managers/InputManager.java">src/main/java/com/example/demo/managers/InputManager.java</a>
+   </td>
+</tr>
+<tr>
+   <td>
+    17. PauseManager
+   </td>
+   <td>
+     The PauseManager class manages the pause functionality in the game. It allows the game to be paused and resumed, displays the pause screen, and manages the pause button. The class interacts with other game components to pause the timeline, stop the timer, and show a settings menu.
+   </td>
+   <td>
+      <a href="src/main/java/com/example/demo/managers/PauseManager.java">src/main/java/com/example/demo/managers/PauseManager.java</a>
+   </td>
+</tr>
+<tr>
+   <td>
+    18. ProjectileManager
+   </td>
+   <td>
+     The ProjectileManager class manages the projectiles fired by both user and enemy units in the game. It handles generating enemy fire, spawning projectiles, and managing the list of projectiles for both user and enemy units. The class is responsible for adding projectiles to the scene and updating their positions.
+   </td>
+   <td>
+      <a href="src/main/java/com/example/demo/managers/ProjectileManager.java">src/main/java/com/example/demo/managers/ProjectileManager.java</a>
+   </td>
+</tr>
+<tr>
+   <td>
+    19. StatusTextManager
+   </td>
+   <td>
+     The StatusTextManager class manages the status text displayed on the screen. It handles the initialization, positioning, and updating of the status text. The text is displayed in a specified font and centered horizontally. The class also ensures that the text remains visible by bringing it to the front when updated.
+   </td>
+   <td>
+      <a href="src/main/java/com/example/demo/managers/StatusTextManager.java">src/main/java/com/example/demo/managers/StatusTextManager.java</a>
+   </td>
+</tr>
+<tr>
+   <td>
+    20. TimelineManager
+   </td>
+   <td>
+     The TimelineManager class manages the game loop timeline for updating the scene. It controls the timing of scene updates by running a game loop at a fixed interval. The timeline can be started, paused, resumed, and stopped, allowing for flexible control over the game's update cycle. The class ensures that the game's update routine is executed repeatedly at a specified delay.
+   </td>
+   <td>
+      <a href="src/main/java/com/example/demo/managers/TimelineManager.java">src/main/java/com/example/demo/managers/TimelineManager.java</a>
+   </td>
+</tr>
+<tr>
+   <td>
+    21. HorizontalMovementStrategy
+   </td>
+   <td>
+     The HorizontalMovementStrategy class implements the MovementStrategy interface and defines a strategy for moving a fighter plane horizontally. It allows a fighter plane to move at a specified velocity in the horizontal direction. This class encapsulates the behavior of horizontal movement, enabling flexibility in controlling how the plane moves.
+   </td>
+   <td>
+      <a href="src/main/java/com/example/demo/strategies/movement/HorizontalMovementStrategy.java">src/main/java/com/example/demo/strategies/movement/HorizontalMovementStrategy.java</a>
+   </td>
+</tr>
+<tr>
+   <td>
+    22. MovementStrategy
+   </td>
+   <td>
+     The MovementStrategy interface defines the method required for a movement strategy. Any class implementing this interface must provide an implementation for updating the position of a fighter plane. This interface decouples the movement logic from specific plane types, allowing for different movement strategies (e.g., horizontal, vertical, or combined movements) to be easily swapped and applied to various plane types.
+   </td>
+   <td>
+      <a href="src/main/java/com/example/demo/strategies/movement/MovementStrategy.java">src/main/java/com/example/demo/strategies/movement/MovementStrategy.java</a>
+   </td>
+</tr>
+<tr>
+   <td>
+    23. VerticalMovementStrategy
+   </td>
+   <td>
+     The VerticalMovementStrategy class implements the MovementStrategy interface. It defines a strategy for moving a fighter plane vertically. The strategy ensures that the plane moves vertically at a specified velocity and prevents the plane from moving out of the allowed vertical bounds (e.g., the screen limits). If the plane exceeds these bounds, its position is reset to the previous valid position, ensuring controlled movement within the screen.
+   </td>
+   <td>
+      <a href="src/main/java/com/example/demo/strategies/movement/VerticalMovementStrategy.java">src/main/java/com/example/demo/strategies/movement/VerticalMovementStrategy.java</a>
+   </td>
+</tr>
+<tr>
+   <td>
+    24. HorizontalProjectileMovementStrategy
+   </td>
+   <td>
+     The HorizontalProjectileMovementStrategy class implements the ProjectileMovementStrategy interface. It defines a strategy for moving a projectile horizontally. The strategy ensures that the projectile moves horizontally at a specified velocity, which can be customized upon instantiation. This class provides a method to update the position of the projectile by adjusting its horizontal movement.
+   </td>
+   <td>
+      <a href="src/main/java/com/example/demo/strategies/projectile/HorizontalProjectileMovementStrategy.java">src/main/java/com/example/demo/strategies/projectile/HorizontalProjectileMovementStrategy.java</a>
+   </td>
+</tr>
+<tr>
+   <td>
+    25. ProjectileFiringStrategy
+   </td>
+   <td>
+     The ProjectileFiringStrategy interface defines the method required for a projectile firing strategy. Any class implementing this interface must provide an implementation for firing a projectile. The firing method returns the fired projectile (or null if no projectile is fired).
+   </td>
+   <td>
+      <a href="src/main/java/com/example/demo/strategies/projectile/ProjectileFiringStrategy.java">src/main/java/com/example/demo/strategies/projectile/ProjectileFiringStrategy.java</a>
+   </td>
+</tr>
+<tr>
+   <td>
+    26. ProjectileMovementStrategy
+   </td>
+   <td>
+     The ProjectileMovementStrategy interface defines the method required for a projectile movement strategy. Any class implementing this interface must provide an implementation for updating the position of a projectile.
+   </td>
+   <td>
+      <a href="src/main/java/com/example/demo/strategies/projectile/ProjectileMovementStrategy.java">src/main/java/com/example/demo/strategies/projectile/ProjectileMovementStrategy.java</a>
+   </td>
+</tr>
+<tr>
+   <td>
+    27. LeaderboardScreen
+   </td>
+   <td>
+     The LeaderboardScreen class displays the leaderboard with the times of each playthrough.
+   </td>
+   <td>
+      <a href="src/main/java/com/example/demo/ui/LeaderboardScreen.java">src/main/java/com/example/demo/ui/LeaderboardScreen.java</a>
+   </td>
+</tr>
+<tr>
+   <td>
+    28. MainMenu
+   </td>
+   <td>
+     The MainMenu class creates the main menu interface for the game, including buttons to start the game, view instructions, and exit.
+   </td>
+   <td>
+      <a href="src/main/java/com/example/demo/ui/MainMenu.java">src/main/java/com/example/demo/ui/MainMenu.java</a>
+   </td>
+</tr>
+<tr>
+   <td>
+    29. PauseScreen
+   </td>
+   <td>
+     The PauseScreen class represents a pause screen in a JavaFX application. It provides options to resume the game, go to settings, or return to the main menu.
+   </td>
+   <td>
+      <a href="src/main/java/com/example/demo/ui/PauseScreen.java">src/main/java/com/example/demo/ui/PauseScreen.java</a>
+   </td>
+</tr>
+<tr>
+   <td>
+    30. WinGameScreen
+   </td>
+   <td>
+     The WinGameScreen class displays the screen shown when the player wins the game. It includes options to restart the level or return to the main menu. The screen also shows the total time taken to win the game.
+   </td>
+   <td>
+      <a href="src/main/java/com/example/demo/ui/WinGameScreen.java">src/main/java/com/example/demo/ui/WinGameScreen.java</a>
+   </td>
+</tr>
+</table><br>
+
+
 
 # Modified Java Classes
 
