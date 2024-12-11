@@ -52,6 +52,7 @@ cd CW2024
     <li>Select Run As > Maven install.</li>
   </ul>
 
+
 **4. Compile the Code**
 <li>Eclipse will automatically compile the code as you make changes.</li>
 <li>To manually build the project, go to Project > Build Project.</li>
@@ -65,9 +66,86 @@ cd CW2024
 <li>Ensure any additional dependencies or special settings required are configured. This might include setting up environment variables or configuring specific IDE settings.</li>
 
 
-
-
 # Implemented and Working Properly
+**1. Main Menu and Pause Menu**
+<li>Introduced a main menu that appears upon game startup.</li>
+    <ul>
+      <li>The main menu has a start button which allows user to start the game.</li>
+      <li>The main menu has an instruction button which shows the instruction screen on how to play the game.</li>
+      <li>The main menu has a leaderboard button which displays the time to complete all levels in a decending order.</li>
+      <li>The main menu has an exit button that allows user to quit the game.</li>
+    </ul>
+<li>Created a pause menu to manage game pauses.</li>
+    <ul>
+      <li>The pause menu will appears when the user clicks on the pause button that is available for all levels throughout the game</li>
+      <li>The pause menu will display a text that shows user that game is paused.</li>
+      <li>The pause menu has a resume button that allows user to resume the game.</li>
+      <li>The pause menu has a setting button that allows user to press into instruction screen.</li>
+      <li>The pause menu has a return to main menu button to return to main menu.</li>
+    </ul>
+
+
+**2. User Plane Enhancements**
+<li>The user plane can move left and right, allowing for smooth horizontal navigation during gameplay.</li>
+
+
+**3. Visual and Audio Improvements**
+<li>Added and changed background images for various screens throughout the game.</li>
+    <ul>
+      <li>Changed background image for level one and level boss.</li>
+      <li>Added background iamges for main menu, pause screen, leaderboard screen, win game screen, instruction screen and setting screen. </li>
+    </ul>
+<li>Changed original icons and added icons for new buttons.</li>
+    <ul>
+      <li>Added close button icon for close button.</li>
+      <li>Added exit button icon for exit button.</li>
+      <li>Added instruction button icon for instruction button.</li>
+      <li>Added restart button icon for restart button.</li>
+      <li>Added resume button icon for resume button.</li>
+      <li>Added setting button icon for setting button.</li>
+      <li>Added pause screen button icon for pause screen button.</li>
+      <li>Changed heart icon.</li>
+    </ul>
+<li>Included sound effects for firing projectiles and background music.</li>
+
+
+**4. Gameplay Additions**
+<li>Added one additional level (Level Two).</li>
+<li>Added level transition screens between levels.</li>
+    <ul>
+      <lil>The le</lil>
+      <li>The level transition screen will display a text that says entering the next level.</li>
+    </ul>
+<li>Implemented a status text.</li>
+    <ul>
+      <li>The status text will display how many enemy planes are left to advance to the next level in level one and level two.</li>
+      <li>The status text will display how many health of the boss are left to win the game in level boss.</li>
+    </ul>
+<li>Implemented win game screen.</li>
+    <ul>
+      <li>The win game screen will display a text that shows user has win the game.</li>
+      <li>The win game screen will display the total time used to complete all levels.</li>
+      <li>The win game screen has a restart button that allows user to restart to level one and play again.</li>
+      <li>The win game screen has a return to main menu button that allows user to return to main menu.</li>
+    </ul>
+
+
+**5. Leaderboard**
+<li>Added a leaderboard screen</li>
+    <ul>
+      <li>The leaderboard screen will records the time used to complete level one , level two and level boss.</li>
+      <li>The leaderboard screen will add up the total time used to complete all levels and display them in a decending order</li>
+      <li>The leaderboard screen allows user to clear up previous records.</li>
+    </ul>
+
+
+
+
+
+
+
+
+
 
 # Implemented but Not Working Properly
 
