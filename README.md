@@ -282,6 +282,42 @@ cd CW2024
 
 
 # Features Not Implemented
+**1. In-Game Power-ups**
+<table style="width:100%">
+  <tr>
+    <th>Feature</th>
+    <th>Reason for Not Implementing</th>
+  </tr>
+  <tr>
+    <td>
+      Did not add any additional power ups for game interaction throughtout the whole game.
+    </td>
+    <td>
+      <ul>
+        <li>Implementing in-game power-ups requires significant changes to the game mechanics and balancing. Due to time constraints and the complexity involved in designing and integrating various power-ups, this feature was not prioritized.</li>
+      </ul>
+    </td>
+  </tr>
+</table><br>
+
+**2. LoseGameScreen**
+<table style="width:100%">
+  <tr>
+    <th>Feature</th>
+    <th>Reason for Not Implementing</th>
+  </tr>
+  <tr>
+    <td>
+     Lose game screen is not created
+    </td>
+    <td>
+      <ul>
+        <li>A lose game screen was not created due to time constraints and the need to focus on other essential features. Developing a lose screen would require additional design and implementation efforts, which were allocated to more critical aspects of the game. As a result, this feature was not included in the current version of the game.</li>
+      </ul>
+    </td>
+  </tr>
+</table><br>
+
 
 # New Java Classes
 
